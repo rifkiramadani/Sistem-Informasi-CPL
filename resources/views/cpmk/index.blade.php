@@ -4,7 +4,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Table Mahasiswa</h1>
+      <h1>Table CPMK</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -19,7 +19,7 @@
         <div class="col-lg-12">
           <div class="card" style="width: 60rem">
             <div class="card-body">
-              <h5 class="card-title">Data Mahasiswa</h5>
+              <h5 class="card-title">Data CPMK</h5>
 
               <!-- Table with hoverable rows -->
               <table class="table table-hover">
