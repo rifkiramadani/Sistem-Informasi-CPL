@@ -21,3 +21,8 @@ Route::get('/cpl', [CplController::class, 'index']);
 
 // ROUTE CPMK
 Route::get('/cpmk', [CpmkController::class, 'index']);
+Route::get('/cpmk/create', [CpmkController::class, 'create']);
+Route::post('/cpmk', [CpmkController::class, 'store']);
+Route::get('/cpmk/{id}/edit', [CpmkController::class, 'edit']);
+Route::put('/cpmk/{id}', [CpmkController::class, 'update']);
+Route::delete('/cpmk/{id}', [CpmkController::class, 'destroy']);

@@ -19,79 +19,41 @@
         <div class="col-lg-12">
           <div class="card" style="width: 60rem">
             <div class="card-body">
-              <h5 class="card-title">Data CPMK</h5>
+              @if (session()->has('success'))
+                  <div class="alert alert-success mt-3">
+                    {{ session('success') }}
+                  </div>
+              @endif
+                <h5 class="card-title">Data CPMK <a class="btn btn-primary float-end" href="/cpmk/create">+ Tambah CPMK</a></h5>
 
               <!-- Table with hoverable rows -->
               <table class="table table-hover">
                 <thead>
                   <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Npm</th>
-                    <th scope="col">Semester</th>
-                    <th scope="col">CPL</th>
-                    <th scope="col">CPMK</th>
-                    <th scope="col">Nilai</th>
-                    <th scope="col">Nilai Angka</th>
+                    <th scope="col">Kode CPMK</th>
+                    <th scope="col">Deskripsi</th>
+                    <th scope="col">Skor Maks</th>
                     <th scope="col">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                  </tr>
+                  @foreach ($cpmks as $cpmk)
+                    <tr>
+                      <th scope="row">{{ $loop->iteration }}</th>
+                      <td>{{ $cpmk->name }}</td>
+                      <td>{{ $cpmk->deskripsi }}</td>
+                      <td>{{ $cpmk->skor_maks }}</td>
+                      <td>
+                        <a href="/cpmk/{{ $cpmk->id }}/edit" class="btn btn-warning">Edit</a>
+                        <form action="/cpmk/{{ $cpmk->id }}" method="post" class="d-inline">
+                          @method('DELETE')
+                          @csrf
+                          <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus Data???')">Hapus</button>
+                        </form>
+                      </td>
+                    </tr>
+                  @endforeach
                 </tbody>
               </table>
               <!-- End Table with hoverable rows -->

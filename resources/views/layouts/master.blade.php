@@ -42,9 +42,9 @@
         <header id="header" class="header fixed-top d-flex align-items-center header-scrolled">
       
           <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <img src="/assets/img/Logo-unib.png" alt="">
-              <span class="d-none d-lg-block">Sistem <br> Informasi CPL</span>
+            <img src="/assets/img/Logo-unib.png" alt="" width="50px">
+            <a href="index.html" class="logo d-flex align-items-center ms-2">
+              <span class="d-none d-lg-block" style="font-size: 20px">Sistem Informasi CPL</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
           </div><!-- End Logo -->
@@ -99,27 +99,27 @@
         <aside id="sidebar" class="sidebar">
           <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="/mahasiswa">
+              <a class="nav-link {{ request()->is('mahasiswa') ? '' : 'collapsed' }}" href="/mahasiswa">
                 <i class="bi bi-person"></i>
                 <span>Mahasiswa</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/matakuliah">
-                <i class="bi bi-person"></i>
+              <a class="nav-link {{ request()->is('matakuliah') ? '' : 'collapsed' }}" href="/matakuliah">
+                <i class="bi bi-book"></i>
                 <span>Mata Kuliah</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/cpl">
-                <i class="bi bi-person"></i>
+              <a class="nav-link {{ request()->is('cpl') ? '' : 'collapsed' }}" href="/cpl">
+                <i class="bi bi-journal"></i>
                 <span>CPL</span>
               </a>
             </li>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/cpmk">
-                <i class="bi bi-person"></i>
+              <a class="nav-link {{ request()->is('cpmk') ? '' : 'collapsed' }}" href="/cpmk">
+                <i class="bi bi-journals"></i>
                 <span>CPMK</span>
               </a>
             </li>
