@@ -32,7 +32,6 @@
             </div>
             <button class="btn btn-primary" type="submit">+ Tambah Data</button>
           </form>
-
         </div>
       </div>
     </div>

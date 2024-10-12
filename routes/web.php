@@ -18,6 +18,11 @@ Route::get('/matakuliah', [MatakuliahController::class, 'index']);
 
 // ROUTE CPL
 Route::get('/cpl', [CplController::class, 'index']);
+Route::get('/cpl/create', [CplController::class, 'create']);
+Route::post('/cpl', [CplController::class, 'store']);
+Route::get('/cpl/{id}/edit', [CplController::class, 'edit']);
+Route::put('/cpl/{id}', [CplController::class, 'update']);
+Route::delete('/cpl/{id}', [CplController::class, 'destroy']);
 
 // ROUTE CPMK
 Route::get('/cpmk', [CpmkController::class, 'index']);
