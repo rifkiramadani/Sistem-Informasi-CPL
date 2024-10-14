@@ -33,7 +33,7 @@
                     <th scope="col">No</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Deskripsi</th>
-                    <th scope="col">CPMK</th>
+                    <th scope="col">CPMK Yang Di Penuhi</th>
                     <th scope="col">Deskripsi CPMK</th>
                     <th scope="col">Aksi</th>
                   </tr>
@@ -44,8 +44,16 @@
                       <th scope="row">{{ $loop->iteration }}</th>
                       <td>{{ $cpl->name }}</td>
                       <td>{{ $cpl->deskripsi }}</td>
-                      <td>{{ $cpl->cpmk->name }}</td>
-                      <td>{{ $cpl->cpmk->deskripsi }}</td>
+                      <td>
+                        @foreach ($cpl->cpmks as $cpmk)
+                            {{ $cpmk->name }}<br>
+                        @endforeach
+                      </td>
+                      <td>
+                        @foreach ($cpl->cpmks as $cpmk)
+                            {{ $cpmk->deskripsi }}<br>
+                        @endforeach
+                      </td>
                       <td>
                         <a class="btn btn-warning" href="/cpl/{{ $cpl->id }}/edit">Edit</a>
                         <form action="/cpl/{{ $cpl->id }}" method="post" class="d-inline">

@@ -27,14 +27,17 @@ class CplController extends Controller
         $validated = $request->validate([
             'name' => 'required|unique:cpls,name',
             'deskripsi' => 'required',
-            'cpmk_id' => 'required|numeric',
+            'cpmk_id' => 'required|array',
+            'cpmk_id.*' => 'numeric'
         ]);
 
-        Cpl::create([
+        $cpl = Cpl::create([
             'name' => $request->name,
             'deskripsi' => $request->deskripsi,
-            'cpmk_id' => $request->cpmk_id
         ]);
+
+        //menambahkan banyak cpmk ke cpl
+        $cpl->cpmk()->attach($request->cpmk_id);
 
         return redirect('/cpl')->with('success', 'Tambah Data CPL Berhasil');
     }
@@ -50,7 +53,8 @@ class CplController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'deskripsi' => 'required',
-            'cpmk_id' => 'required|numeric'
+            'cpmk_id' => 'required|array',
+            'cpmk_id.*' => 'numeric'
         ]);
 
         $cpl = Cpl::findOrFail($id);
@@ -58,8 +62,10 @@ class CplController extends Controller
         $cpl->update([
             'name' => $request->name,
             'deskripsi' => $request->deskripsi,
-            'cpmk_id' => $request->cpmk_id
         ]);
+
+         // Sinkronisasi CPMK (update relation)
+        $cpl->cpmks()->sync($request->cpmk_id);
 
         return redirect('/cpl')->with('success', 'Data CPL Berhasil Di Ubah');
     }

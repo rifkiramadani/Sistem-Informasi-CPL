@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('deskripsi');
-            $table->integer('skor_maks');
+            $table->float('skor_maks');
             $table->timestamps();
         });
     }

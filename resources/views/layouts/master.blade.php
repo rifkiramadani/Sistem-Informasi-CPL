@@ -69,13 +69,13 @@
       
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                   <img src="/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                  <span class="d-none d-md-block dropdown-toggle ps-2">Putro</span>
+                  <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->user()->name }}</span>
                 </a><!-- End Profile Iamge Icon -->
       
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                   <li class="dropdown-header">
-                    <h6>Putro</h6>
-                    <span>Web Designer</span>
+                    <h6>{{ auth()->user()->name }}</h6>
+                    <span>{{ auth()->user()->role }}</span>
                   </li>
                   <li>
                     <hr class="dropdown-divider">
@@ -84,9 +84,12 @@
                     <hr class="dropdown-divider">
                   </li>
                   <li>
-                    <a class="dropdown-item d-flex align-items-center" href="#">
+                    <a class="dropdown-item d-flex align-items-center">
                       <i class="bi bi-box-arrow-right"></i>
-                      <span>Log Out</span>
+                      <form action="/logout" method="post">
+                        @csrf
+                        <button class="btn btn">Log Out</button>
+                      </form>
                     </a>
                   </li>
                 </ul><!-- End Profile Dropdown Items -->
@@ -99,9 +102,27 @@
         <aside id="sidebar" class="sidebar">
           <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
+              <a class="nav-link {{ request()->is('admin') ? '' : 'collapsed' }}" href="/admin">
+                <i class="bi bi-person"></i>
+                <span>Admin</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('operator') ? '' : 'collapsed' }}" href="/operator">
+                <i class="bi bi-person"></i>
+                <span>Operator</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link {{ request()->is('mahasiswa') ? '' : 'collapsed' }}" href="/mahasiswa">
                 <i class="bi bi-person"></i>
                 <span>Mahasiswa</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('dosen') ? '' : 'collapsed' }}" href="/dosen">
+                <i class="bi bi-person"></i>
+                <span>Dosen</span>
               </a>
             </li>
             <li class="nav-item">

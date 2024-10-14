@@ -2,13 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CplController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CpmkController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MatakuliahController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// ROUTE AUTHENTICATION
+Route::get('/', [AuthController::class, 'index']);
+Route::post('/', [AuthController::class, 'authenticate']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
 // ROUTE MAHASISWA
 Route::get('/mahasiswa', [MahasiswaController::class, 'index']);

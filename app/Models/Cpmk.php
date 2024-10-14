@@ -12,7 +12,7 @@ class Cpmk extends Model
 
     protected $guarded = ['id'];
 
-    public function cpl() {
-        return $this->hasMany(Cpl::class);
+    public function cpls() {
+        return $this->belongsToMany(Cpl::class, 'cpl_cpmk', 'cpmk_id', 'cpl_id');
     }
 }

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('cpls', function (Blueprint $table) {
             $table->id();
-            $table->integer('cpmk_id');
             $table->string('name');
             $table->text('deskripsi');
             $table->timestamps();
