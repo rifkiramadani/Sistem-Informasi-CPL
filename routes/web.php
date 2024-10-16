@@ -12,28 +12,36 @@ use App\Http\Controllers\MatakuliahController;
 // });
 
 // ROUTE AUTHENTICATION
-Route::get('/', [AuthController::class, 'index']);
-Route::post('/', [AuthController::class, 'authenticate']);
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/', [AuthController::class, 'index'])->middleware('guest');
+Route::post('/', [AuthController::class, 'authenticate'])->middleware('guest');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
 // ROUTE MAHASISWA
-Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa'])->group(function() {
+    Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
+});
 
 // ROUTE MATA KULIAH
-Route::get('/matakuliah', [MatakuliahController::class, 'index']);
+Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
+    Route::get('/matakuliah', [MatakuliahController::class, 'index']);
+});
 
 // ROUTE CPL
-Route::get('/cpl', [CplController::class, 'index']);
-Route::get('/cpl/create', [CplController::class, 'create']);
-Route::post('/cpl', [CplController::class, 'store']);
-Route::get('/cpl/{id}/edit', [CplController::class, 'edit']);
-Route::put('/cpl/{id}', [CplController::class, 'update']);
-Route::delete('/cpl/{id}', [CplController::class, 'destroy']);
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function() {
+    Route::get('/cpl', [CplController::class, 'index']);
+    Route::get('/cpl/create', [CplController::class, 'create']);
+    Route::post('/cpl', [CplController::class, 'store']);
+    Route::get('/cpl/{id}/edit', [CplController::class, 'edit']);
+    Route::put('/cpl/{id}', [CplController::class, 'update']);
+    Route::delete('/cpl/{id}', [CplController::class, 'destroy']);
+});
 
 // ROUTE CPMK
-Route::get('/cpmk', [CpmkController::class, 'index']);
-Route::get('/cpmk/create', [CpmkController::class, 'create']);
-Route::post('/cpmk', [CpmkController::class, 'store']);
-Route::get('/cpmk/{id}/edit', [CpmkController::class, 'edit']);
-Route::put('/cpmk/{id}', [CpmkController::class, 'update']);
-Route::delete('/cpmk/{id}', [CpmkController::class, 'destroy']);
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function() {
+    Route::get('/cpmk', [CpmkController::class, 'index']);
+    Route::get('/cpmk/create', [CpmkController::class, 'create']);
+    Route::post('/cpmk', [CpmkController::class, 'store']);
+    Route::get('/cpmk/{id}/edit', [CpmkController::class, 'edit']);
+    Route::put('/cpmk/{id}', [CpmkController::class, 'update']);
+    Route::delete('/cpmk/{id}', [CpmkController::class, 'destroy']);
+});

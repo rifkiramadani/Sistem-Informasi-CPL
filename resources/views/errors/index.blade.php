@@ -46,27 +46,12 @@
             <a href="#" class="logo d-flex align-items-center ms-2">
               <span class="d-none d-lg-block" style="font-size: 20px">Sistem Informasi CPL</span>
             </a>
-            <i class="bi bi-list toggle-sidebar-btn"></i>
           </div><!-- End Logo -->
-      
-          <div class="search-bar">
-            <form class="search-form d-flex align-items-center" method="POST" action="#">
-              <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-              <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-            </form>
-          </div><!-- End Search Bar -->
       
           <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
       
-              <li class="nav-item d-block d-lg-none">
-                <a class="nav-link nav-icon search-bar-toggle " href="#">
-                  <i class="bi bi-search"></i>
-                </a>
-              </li><!-- End Search Icon-->
-      
               <li class="nav-item dropdown pe-3">
-      
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                   <img src="/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
                   <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->user()->name }}</span>
@@ -96,72 +81,19 @@
               </li><!-- End Profile Nav -->
             </ul>
           </nav><!-- End Icons Navigation -->
+
         </header><!-- End Header -->
       
-        <!-- ======= Sidebar ======= -->
-        <aside id="sidebar" class="sidebar">
-          <ul class="sidebar-nav" id="sidebar-nav">
-          @if (auth()->user()->hasRole('SuperAdmin/AkunSakti'))
-            <li class="nav-item">
-              <a class="nav-link {{ request()->is('admin') ? '' : 'collapsed' }}" href="/admin">
-                <i class="bi bi-person"></i>
-                <span>Admin</span>
-              </a>
-            </li>
-          @endif
-          @if (auth()->user()->hasRole('SuperAdmin/AkunSakti'))
-            <li class="nav-item">
-              <a class="nav-link {{ request()->is('operator') ? '' : 'collapsed' }}" href="/operator">
-                <i class="bi bi-person"></i>
-                <span>Operator</span>
-              </a>
-            </li>
-          @endif
-          @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Operator')|| auth()->user()->hasRole('Dosen'))
-            <li class="nav-item">
-              <a class="nav-link {{ request()->is('mahasiswa') ? '' : 'collapsed' }}" href="/mahasiswa">
-                <i class="bi bi-person"></i>
-                <span>Mahasiswa</span>
-              </a>
-            </li>
-          @endif
-          @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Operator'))
-            <li class="nav-item">
-              <a class="nav-link {{ request()->is('dosen') ? '' : 'collapsed' }}" href="/dosen">
-                <i class="bi bi-person"></i>
-                <span>Dosen</span>
-              </a>
-            </li>
-            @endif
-            @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin'))
-              <li class="nav-item">
-                <a class="nav-link {{ request()->is('matakuliah') ? '' : 'collapsed' }}" href="/matakuliah">
-                  <i class="bi bi-book"></i>
-                  <span>Mata Kuliah</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link {{ request()->is('cpl') ? '' : 'collapsed' }}" href="/cpl">
-                  <i class="bi bi-journal"></i>
-                  <span>CPL</span>
-                </a>
-              </li>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link {{ request()->is('cpmk') ? '' : 'collapsed' }}" href="/cpmk">
-                  <i class="bi bi-journals"></i>
-                  <span>CPMK</span>
-                </a>
-              </li>
-            @endif
-            <!-- End Dashboard Nav -->
-          </ul>
-        </aside><!-- End Sidebar-->
+        <main id="main" class="main ms-5">
+            <div>
+                <h5 class="card-title">Errors</h5>
+                <h6>{{ $exception }}</h6>
+            </div>
+        </main>
       
-          @yield('content')
-      
+          
         <!-- ======= Footer ======= -->
-        <footer id="footer" class="footer">
+        {{-- <footer id="footer" class="footer">
           <div class="copyright">
             © Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
           </div>
@@ -172,7 +104,7 @@
             <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
           </div>
-        </footer><!-- End Footer -->
+        </footer><!-- End Footer --> --}}
       
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center active"><i class="bi bi-arrow-up-short"></i></a>
       
@@ -191,5 +123,5 @@
       
       
       
-      <svg id="SvgjsSvg1171" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev" style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;"><defs id="SvgjsDefs1172"></defs><polyline id="SvgjsPolyline1173" points="0,0"></polyline><path id="SvgjsPath1174" d="M0 0 "></path></svg></body>
+      <svg id="SvgjsSvg1171" width="5" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev" style="top: -100%;  position: absolute; opacity: 0;"><defs id="SvgjsDefs1172"></defs><polyline id="SvgjsPolyline1173" points="0,0"></polyline><path id="SvgjsPath1174" d="M0 0 "></path></svg></body>
 </html>

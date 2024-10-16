@@ -7,7 +7,7 @@
     <meta content="" name="keywords">
   
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/logo-unib.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   
     <!-- Google Fonts -->
@@ -76,7 +76,7 @@
                       <div class="col-12">
                         <label for="username" class="form-label">Username</label>
                         <div class="input-group has-validation">
-                          <span class="input-group-text" id="inputGroupPrepend">@</span>
+                          {{-- <span class="input-group-text" id="inputGroupPrepend">@</span> --}}
                           <input type="text" name="username" class="form-control" id="username" name="username" required="">
                           <div class="invalid-feedback">Masukkan username.</div>
                         </div>
