@@ -37,7 +37,7 @@ class CplController extends Controller
         ]);
 
         //menambahkan banyak cpmk ke cpl
-        $cpl->cpmk()->attach($request->cpmk_id);
+        $cpl->cpmks()->attach($request->cpmk_id);
 
         return redirect('/cpl')->with('success', 'Tambah Data CPL Berhasil');
     }

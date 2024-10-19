@@ -46,12 +46,12 @@
                       <td>{{ $cpl->deskripsi }}</td>
                       <td>
                         @foreach ($cpl->cpmks as $cpmk)
-                            {{ $cpmk->name }}<br>
+                            {{ $cpmk->name }}<hr>
                         @endforeach
                       </td>
-                      <td>
+                      <td style="font-size: 10px;" class="fw-bold">
                         @foreach ($cpl->cpmks as $cpmk)
-                            {{ $cpmk->deskripsi }}<br>
+                            {{ $cpmk->deskripsi }}<hr>
                         @endforeach
                       </td>
                       <td>

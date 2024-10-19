@@ -24,6 +24,11 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa']
 // ROUTE MATA KULIAH
 Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
     Route::get('/matakuliah', [MatakuliahController::class, 'index']);
+    Route::get('/matakuliah/create', [MatakuliahController::class, 'create']);
+    Route::post('/matakuliah', [MatakuliahController::class, 'store']);
+    Route::get('/matakuliah/{id}/edit', [MatakuliahController::class, 'edit']);
+    Route::put('/matakuliah/{id}', [MatakuliahController::class, 'update']);
+    Route::delete('/matakuliah/{id}', [MatakuliahController::class, 'destroy']);
 });
 
 // ROUTE CPL

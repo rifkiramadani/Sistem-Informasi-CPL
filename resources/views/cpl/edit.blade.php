@@ -36,7 +36,7 @@
                             @if($cpl->cpmks->contains($cpmk->id)) checked @endif
                             class="form-check-input">
                         <label class="form-check-label" for="cpmk_{{ $cpmk->id }}">
-                            {{ $cpmk->name }}
+                            {{ $cpmk->name }} | {{ $cpmk->deskripsi }}
                         </label>
                     </div>
                 @endforeach
