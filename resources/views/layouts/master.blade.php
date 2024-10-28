@@ -94,6 +94,9 @@
         <!-- ======= Sidebar ======= -->
         <aside id="sidebar" class="sidebar">
           <ul class="sidebar-nav" id="sidebar-nav">
+          @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Operator')|| auth()->user()->hasRole('Dosen'))
+            <h5>Pengguna</h5>  
+          @endif
           @if (auth()->user()->hasRole('SuperAdmin/AkunSakti'))
             <li class="nav-item">
               <a class="nav-link {{ request()->is('admin') ? '' : 'collapsed' }}" href="/admin">
@@ -127,6 +130,14 @@
             </li>
             @endif
             @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin'))
+            <hr>
+            <h5>Pemetaan</h5>
+              <li class="nav-item">
+                <a class="nav-link {{ request()->is('rumusan') ? '' : 'collapsed' }}" href="/rumusan">
+                  <i class="bi bi-book"></i>
+                  <span><b>Rumusan</b></span>
+                </a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link {{ request()->is('matakuliah') ? '' : 'collapsed' }}" href="/matakuliah">
                   <i class="bi bi-book"></i>

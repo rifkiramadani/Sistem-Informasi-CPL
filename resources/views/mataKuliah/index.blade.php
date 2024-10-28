@@ -5,13 +5,6 @@
 
     <div class="pagetitle">
       <h1>Table Mata Kuliah</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">General</li>
-        </ol>
-      </nav>
     </div><!-- End Page Title -->
 
     <section class="section">
@@ -33,8 +26,6 @@
                     <th scope="col">Kode Matkul</th>
                     <th scope="col">Nama Mata Kuliah</th>
                     <th scope="col">Semester</th>
-                    <th scope="col">CPL yang di penuhi</th>
-                    <th scope="col">Deskripsi CPL</th>
                     <th scope="col">Aksi</th>
                   </tr>
                 </thead>
@@ -45,16 +36,6 @@
                     <td>{{ $matakuliah->kode_matkul }}</td>
                     <td>{{ $matakuliah->name }}</td>
                     <td>{{ $matakuliah->semesters->name }}</td>
-                    <td>
-                      @foreach ($matakuliah->cpls as $cpl)
-                          {{ $cpl->name }}<hr>
-                      @endforeach
-                    </td>
-                    <td style="font-size: 10px;" class="fw-bold">
-                      @foreach ($matakuliah->cpls as $cpl)
-                          {{ $cpl->deskripsi }}<hr>
-                      @endforeach
-                    </td>
                     <td>
                       <a class="btn btn-warning" href="/matakuliah/{{ $matakuliah->id }}/edit">Edit</a>
                       <form action="/matakuliah/{{ $matakuliah->id }}" method="post" class="d-inline">

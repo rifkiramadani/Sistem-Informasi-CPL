@@ -5,13 +5,6 @@
 
     <div class="pagetitle">
       <h1>Table CPL</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">General</li>
-        </ol>
-      </nav>
     </div><!-- End Page Title -->
 
     <section class="section">
@@ -31,10 +24,9 @@
                 <thead>
                   <tr>
                     <th scope="col">No</th>
+                    <th scope="col">Kode CPL</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Deskripsi</th>
-                    <th scope="col">CPMK Yang Di Penuhi</th>
-                    <th scope="col">Deskripsi CPMK</th>
                     <th scope="col">Aksi</th>
                   </tr>
                 </thead>
@@ -42,16 +34,16 @@
                   @foreach ($cpls as $cpl)    
                     <tr>
                       <th scope="row">{{ $loop->iteration }}</th>
-                      <td>{{ $cpl->name }}</td>
+                      <td class="fw-bold">{{ $cpl->name }}</td>
                       <td>{{ $cpl->deskripsi }}</td>
                       <td>
                         @foreach ($cpl->cpmks as $cpmk)
-                            {{ $cpmk->name }}<hr>
+                            <div class="aligned-content">{{ $cpmk->name }} <hr></div>
                         @endforeach
                       </td>
-                      <td style="font-size: 10px;" class="fw-bold">
+                      <td style="font-size: 10px;" >
                         @foreach ($cpl->cpmks as $cpmk)
-                            {{ $cpmk->deskripsi }}<hr>
+                            <div class="aligned-content">{{ $cpmk->deskripsi }}<hr></div>
                         @endforeach
                       </td>
                       <td>

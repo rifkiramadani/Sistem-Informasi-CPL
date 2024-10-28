@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CplController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CpmkController;
+use App\Http\Controllers\RumusanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MatakuliahController;
 
@@ -17,8 +18,13 @@ Route::post('/', [AuthController::class, 'authenticate'])->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
 // ROUTE MAHASISWA
-Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa'])->group(function() {
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|Dosen'])->group(function() {
     Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
+});
+
+// ROUTE RUMUSAN
+Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
+    Route::get('/rumusan', [RumusanController::class, 'index']);
 });
 
 // ROUTE MATA KULIAH
