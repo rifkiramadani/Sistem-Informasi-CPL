@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CplController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CpmkController;
+use App\Http\Controllers\DosenController;
 use App\Http\Controllers\RumusanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MatakuliahController;
@@ -16,6 +17,19 @@ use App\Http\Controllers\MatakuliahController;
 Route::get('/', [AuthController::class, 'index'])->middleware('guest');
 Route::post('/', [AuthController::class, 'authenticate'])->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
+// ROUTE DOSEN 
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator'])->group(function() {
+    //CRUD DOSEN
+    Route::get('/dosen', [DosenController::class, 'index']);
+    Route::get('/dosen/create', [DosenController::class, 'create']);
+    Route::post('/dosen', [DosenController::class, 'store']);
+    Route::get('/dosen/{id}/edit', [DosenController::class, 'edit']);
+    Route::put('/dosen/{id}', [DosenController::class, 'update']);
+    Route::delete('/dosen/{id}', [DosenController::class, 'destroy']);
+    Route::get('/dosen/{id}/matakuliah', [DosenController::class, 'addMatakuliah']);
+    Route::post('/dosen/{id}/matakuliah', [DosenController::class, 'insertMatakuliah']);
+});
 
 // ROUTE MAHASISWA
 Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|Dosen'])->group(function() {

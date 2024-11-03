@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Dosen;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -18,10 +19,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
+        'username',
         'name',
         'email',
         'password',
     ];
+
+    public function dosens() {
+        return $this->HasMany(Dosen::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

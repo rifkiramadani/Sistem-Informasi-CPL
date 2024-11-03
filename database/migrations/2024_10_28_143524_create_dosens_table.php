@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('dosens', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->string('name');
-            $table->string('nip');
-            $table->integer('mata_kuliah_id');
+            $table->integer("user_id");
+            $table->string("nip");
             $table->timestamps();
         });
     }
