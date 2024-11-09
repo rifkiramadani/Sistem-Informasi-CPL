@@ -8,6 +8,8 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\RumusanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MatakuliahController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OperatorController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -17,6 +19,26 @@ use App\Http\Controllers\MatakuliahController;
 Route::get('/', [AuthController::class, 'index'])->middleware('guest');
 Route::post('/', [AuthController::class, 'authenticate'])->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
+//ROUTE ADMIN
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti'])->group(function() {
+    Route::get('/admin', [AdminController::class, 'index']);
+    Route::get('/admin/create', [AdminController::class, 'create']);
+    Route::post('/admin', [AdminController::class, 'store']);
+    Route::get('/admin/{id}/edit', [AdminController::class, 'edit']);
+    Route::put('/admin/{id}', [AdminController::class, 'update']);
+    Route::delete('/admin/{id}', [AdminController::class, 'destroy']);
+});
+
+// ROUTE OPERATOR
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function() {
+    Route::get('/operator', [OperatorController::class, 'index']);
+    Route::get('/operator/create', [OperatorController::class, 'create']);
+    Route::post('/operator', [OperatorController::class, 'store']);
+    Route::get('/operator/{id}/edit', [OperatorController::class, 'edit']);
+    Route::put('/operator/{id}', [OperatorController::class, 'update']);
+    Route::delete('/operator/{id}', [OperatorController::class, 'destroy']);
+});
 
 // ROUTE DOSEN 
 Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator'])->group(function() {
@@ -28,7 +50,7 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator'])->group(f
     Route::put('/dosen/{id}', [DosenController::class, 'update']);
     Route::delete('/dosen/{id}', [DosenController::class, 'destroy']);
     Route::get('/dosen/{id}/matakuliah', [DosenController::class, 'addMatakuliah']);
-    Route::post('/dosen/{id}/matakuliah', [DosenController::class, 'insertMatakuliah']);
+    Route::put('/dosen/{id}/matakuliah', [DosenController::class, 'insertMatakuliah']);
 });
 
 // ROUTE MAHASISWA

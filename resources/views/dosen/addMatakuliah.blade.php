@@ -22,6 +22,7 @@
 
               <form action="/dosen/{{ $dosen->id }}/matakuliah" method="post">
                 @csrf
+                @method('PUT')
                 <label for="mata_kuliah_id">Pilih Mata Kuliah</label>
                 <div class="form-check">
                     @foreach ($matakuliahs as $matakuliah)

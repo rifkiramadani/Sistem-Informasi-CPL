@@ -111,7 +111,12 @@ class DosenController extends Controller
 
         $dosen = Dosen::findOrFail($id);
 
-        $dosen->matakuliah()->sync($request->mata_kuliah_id ?? []);
+        // Cek apakah 'Tidak Ada' dicentang, jika ya, kosongkan mata kuliah
+        if ($request->has('no_subject')) {
+            $dosen->matakuliah()->sync([]); // Menghapus semua mata kuliah dari dosen
+        } else {
+            $dosen->matakuliah()->sync($request->mata_kuliah_id ?? []);
+        }
 
         return redirect('/dosen')->with('success', 'Set Mata Kuliah Berhasil');
     }

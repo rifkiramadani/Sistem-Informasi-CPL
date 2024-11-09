@@ -47,36 +47,6 @@
                           @foreach ($dosen->matakuliah as $matakuliah)
                             <div class="aligned-content">{{ $matakuliah->kode_matkul }}|{{ $matakuliah->name }} <hr></div>
                           @endforeach
-                          <!-- Basic Modal -->
-                          <div class="modal fade" id="modal" tabindex="-1" style="display: none;" aria-hidden="true">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title">Berikan Mata Kuliah</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                      <div class="mb-3">
-                                        <label for="mata_kuliah_id">Pilih Mata Kuliah</label>
-                                        <div class="form-check">
-                                            @foreach ($matakuliahs as $matakuliah)
-                                                <input type="checkbox" name="mata_kuliah_id[]" id="mata_kuliah_id" value="{{ $matakuliah->id }}" 
-                                                @if ($dosen->matakuliah->contains($matakuliah->id)) checked @endif class="form-check-input">
-                                                <label class="form-check-label" for="mata_kuliah_id">
-                                                    {{ $matakuliah->kode_matkul }} | {{ $matakuliah->name }} | Semester {{ $matakuliah->semesters->name }}
-                                                </label>
-                                                <br>
-                                            @endforeach
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                      <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div><!-- End Basic Modal-->
                             </form>
                           </td>
                             <td>
