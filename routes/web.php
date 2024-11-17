@@ -56,11 +56,12 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator'])->group(f
 // ROUTE MAHASISWA
 Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|Dosen'])->group(function() {
     Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
+    
 });
 
 // ROUTE RUMUSAN
 Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
-    Route::get('/rumusan', [RumusanController::class, 'index']);
+    
 });
 
 // ROUTE MATA KULIAH

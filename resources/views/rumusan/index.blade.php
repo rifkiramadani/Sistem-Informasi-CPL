@@ -29,46 +29,18 @@
                     <th scope="col">Skor Maks</th>
                   </tr>
                 </thead>
-                <tbody>
-                  @foreach ($matakuliahs as $matakuliah)    
+                <tbody> 
                     <tr>
-                      <th scope="row">{{ $loop->iteration }}</th>
-                      <td>{{ $matakuliah->kode_matkul }}</td>
-                      <td>{{ $matakuliah->name }}</td>
-                      <td>{{ $matakuliah->semesters->name }}</td>
-                      <td class="fw-bold">
-                        @foreach ($matakuliah->cpls as $cpl)
-                           <div class="aligned-content">{{ $cpl->name }} <hr></div>
-                        @endforeach
-                      </td>
-                      <td style="font-size: 10px;">
-                        @foreach ($matakuliah->cpls as $cpl)
-                            <div class="aligned-content">{{ $cpl->deskripsi }} <hr></div>
-                        @endforeach
-                      </td>
-                      <td class="fw-bold">
-                        @foreach ($matakuliah->cpls as $cpl)
-                            @foreach ($cpl->cpmks as $cpmk)
-                                <div class="aligned-content">{{ $cpmk->name }} <hr></div>
-                            @endforeach
-                        @endforeach
-                      </td>
-                      <td style="font-size: 10px;">
-                        @foreach ($matakuliah->cpls as $cpl)
-                            @foreach ($cpl->cpmks as $cpmk)
-                                <div class="aligned-content">{{ $cpmk->deskripsi }} <hr></div>
-                            @endforeach
-                        @endforeach
-                      </td>
-                      <td>
-                        @foreach ($matakuliah->cpls as $cpl)
-                            @foreach ($cpl->cpmks as $cpmk)
-                                <div class="aligned-content">{{ $cpmk->skor_maks }} <hr></div>
-                            @endforeach
-                        @endforeach
-                      </td>
+                      <th scope="row"></th>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
                     </tr>
-                  @endforeach
                 </tbody>
               </table>
               <!-- End Table with hoverable rows -->

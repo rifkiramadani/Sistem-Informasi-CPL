@@ -26,18 +26,6 @@
                 <label for="deskripsi">Deskripsi</label>
                 <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="5" required></textarea>
               </div>
-              <div class="mb-3">
-                <label for="cpmk_id">Pilih CPMK</label>
-                <div class="form-check">
-                    @foreach ($cpmks as $cpmk)
-                        <input type="checkbox" name="cpmk_id[]" id="cpmk_{{ $cpmk->id }}" value="{{ $cpmk->id }}" class="form-check-input">
-                        <label class="form-check-label" for="cpmk_{{ $cpmk->id }}">
-                            {{ $cpmk->name }} | {{ $cpmk->deskripsi }}
-                        </label>
-                        <br>
-                    @endforeach
-                </div>
-              </div>
               <button class="btn btn-primary" type="submit">+ Tambah Data</button>
             </form>
           </div>

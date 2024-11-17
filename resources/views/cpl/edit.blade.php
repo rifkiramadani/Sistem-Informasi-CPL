@@ -27,21 +27,6 @@
                 <label for="deskripsi">Deskripsi</label>
                 <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="5" required>{{ $cpl->deskripsi }}</textarea>
               </div>
-              <div class="mb-3">
-                <label for="cpmk_id">Pilih CPMK</label>
-                <div class="form-check">
-                  @foreach ($cpmks as $cpmk)
-                    <div class="form-check">
-                        <input type="checkbox" name="cpmk_id[]" id="cpmk_{{ $cpmk->id }}" value="{{ $cpmk->id }}"
-                            @if($cpl->cpmks->contains($cpmk->id)) checked @endif
-                            class="form-check-input">
-                        <label class="form-check-label" for="cpmk_{{ $cpmk->id }}">
-                            {{ $cpmk->name }} | {{ $cpmk->deskripsi }}
-                        </label>
-                    </div>
-                @endforeach
-              </div>
-              </div>
               <button class="btn btn-primary" type="submit">+ Ubah Data</button>
             </form>
           </div>

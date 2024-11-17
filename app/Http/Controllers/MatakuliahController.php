@@ -30,8 +30,6 @@ class MatakuliahController extends Controller
             'kode_matkul' => 'required',
             'name' => 'required',
             'semester_id' => 'required|numeric',
-            'cpl_id' => 'required|array',
-            'cpl_id.*' => 'numeric'
         ]);
 
         $mataKuliah = Mata_kuliah::create([
@@ -39,9 +37,6 @@ class MatakuliahController extends Controller
             'name' => $request->name,
             'semester_id' => $request->semester_id
         ]);
-
-        //menambahkan banyak cpl ke mata kuliah
-        $mataKuliah->cpls()->attach($request->cpl_id);
 
         return redirect('/matakuliah')->with('success', 'Tambah Mata Kuliah Berhasil');
 
@@ -60,8 +55,6 @@ class MatakuliahController extends Controller
             'kode_matkul' => 'required',
             'name' => 'required',
             'semester_id' => 'required|numeric',
-            'cpl_id' => 'required|array',
-            'cpl_id.*' => 'numeric'
         ]);
 
         $matakuliah = Mata_kuliah::findOrFail($id);
@@ -71,8 +64,6 @@ class MatakuliahController extends Controller
             'name' => $request->name,
             'semester_id' => $request->semester_id
         ]);
-
-        $matakuliah->cpls()->sync($request->cpl_id);
 
         return redirect('/matakuliah')->with('success', 'Ubah Data Mata Kuliah Berhasil');
     }

@@ -132,31 +132,31 @@
             @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin'))
             <hr>
             <h5>Pemetaan</h5>
-              <li class="nav-item">
-                <a class="nav-link {{ request()->is('rumusan') ? '' : 'collapsed' }}" href="/rumusan">
-                  <i class="bi bi-book"></i>
-                  <span><b>Rumusan</b></span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link {{ request()->is('matakuliah') ? '' : 'collapsed' }}" href="/matakuliah">
-                  <i class="bi bi-book"></i>
-                  <span>Mata Kuliah</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link {{ request()->is('cpl') ? '' : 'collapsed' }}" href="/cpl">
-                  <i class="bi bi-journal"></i>
-                  <span>CPL</span>
-                </a>
-              </li>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link {{ request()->is('cpmk') ? '' : 'collapsed' }}" href="/cpmk">
-                  <i class="bi bi-journals"></i>
-                  <span>CPMK</span>
-                </a>
-              </li>
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('cpmk') ? '' : 'collapsed' }}" href="/cpmk">
+                <i class="bi bi-journals"></i>
+                <span>CPMK</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('cpl') ? '' : 'collapsed' }}" href="/cpl">
+                <i class="bi bi-journal"></i>
+                <span>CPL</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('matakuliah') ? '' : 'collapsed' }}" href="/matakuliah">
+                <i class="bi bi-book"></i>
+                <span>Mata Kuliah</span>
+              </a>
+            </li>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->is('rumusan') ? '' : 'collapsed' }}" href="/rumusan">
+              <i class="bi bi-book"></i>
+              <span><b>Rumusan</b></span>
+            </a>
+          </li>
             @endif
             <!-- End Dashboard Nav -->
           </ul>

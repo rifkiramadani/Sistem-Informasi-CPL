@@ -38,20 +38,6 @@
                     @endforeach
                 </select>
               </div>
-              <div class="mb-3">
-                <label for="cpl_id">Pilih CPL</label>
-                <div class="form-check">
-                    @foreach ($cpls as $cpl)
-                        <input type="checkbox" name="cpl_id[]" id="cpl_{{ $cpl->id }}" value="{{ $cpl->id }}" 
-                        @if ($matakuliah->cpls->contains($cpl->id)) checked @endif
-                        class="form-check-input">
-                        <label class="form-check-label" for="cpl_{{ $cpl->id }}">
-                            {{ $cpl->name }} | {{ $cpl->deskripsi }}
-                        </label>
-                        <br>
-                    @endforeach
-                </div>
-              </div>
               <button class="btn btn-primary" type="submit">+ Ubah Data</button>
             </form>
           </div>
