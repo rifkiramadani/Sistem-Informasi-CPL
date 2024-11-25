@@ -20,6 +20,10 @@ class Mata_kuliah extends Model
         return $this->belongsTo(Semester::class, 'semester_id');
     }
 
+    public function rumusan() {
+        return $this->hasMany(Mata_kuliah::class);
+    }
+
     public function dosen() {
         return $this->belongsToMany(Dosen::class, 'dosen_mata_kuliah', 'dosen_id', 'mata_kuliah_id');
     }

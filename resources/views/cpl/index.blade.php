@@ -35,6 +35,16 @@
                       <th scope="row">{{ $loop->iteration }}</th>
                       <td class="fw-bold">{{ $cpl->name }}</td>
                       <td>{{ $cpl->deskripsi }}</td>
+                      {{-- <td>
+                        @foreach ($cpl->cpmks as $cpmk)
+                            <div class="aligned-content">{{ $cpmk->name }} <hr></div>
+                        @endforeach
+                      </td>
+                      <td style="font-size: 10px;" >
+                        @foreach ($cpl->cpmks as $cpmk)
+                            <div class="aligned-content">{{ $cpmk->deskripsi }}<hr></div>
+                        @endforeach
+                      </td> --}}
                       <td>
                         <a class="btn btn-warning" href="/cpl/{{ $cpl->id }}/edit">Edit</a>
                         <form action="/cpl/{{ $cpl->id }}" method="post" class="d-inline">

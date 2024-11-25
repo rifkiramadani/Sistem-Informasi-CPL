@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Cpmk;
-use App\Models\Mata_kuliah;
+use App\Models\Rumusan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -13,7 +12,10 @@ class Cpl extends Model
 
     protected $guarded = ["id"];
 
-    public function matakuliahs() {
-        return $this->belongsToMany(Mata_kuliah::class, 'matakuliah_cpl', 'mata_kuliah_id', 'cpl_id');
+    public function rumusans()
+    {
+        return $this->belongsToMany(Rumusan::class, 'rumusan_cpl_cpmk', 'cpl_id', 'rumusan_id')
+                    ->withPivot('cpmk_id', 'skor_maks')
+                    ->withTimestamps();
     }
 }

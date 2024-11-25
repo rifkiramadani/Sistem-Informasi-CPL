@@ -4,16 +4,22 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CplController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CpmkController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\RumusanController;
+use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MatakuliahController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\OperatorController;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+// ROUTE DASHBOARD
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Dosen'])->group(function() {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+});
 
 // ROUTE AUTHENTICATION
 Route::get('/', [AuthController::class, 'index'])->middleware('guest');
@@ -61,7 +67,12 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|D
 
 // ROUTE RUMUSAN
 Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
-    
+    Route::get('/rumusan', [RumusanController::class, 'index']);
+    Route::get('/rumusan/create', [RumusanController::class, 'create']);
+    Route::post('/rumusan', [RumusanController::class, 'store']);
+    Route::get('/rumusan/{id}/edit', [RumusanController::class, 'edit']);
+    Route::put('/rumusan/{id}', [RumusanController::class, 'update']);
+    Route::delete('/rumusan/{id}', [RumusanController::class, 'destroy']);
 });
 
 // ROUTE MATA KULIAH

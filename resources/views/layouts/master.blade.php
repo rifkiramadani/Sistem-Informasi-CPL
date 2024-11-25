@@ -78,6 +78,13 @@
                   </li>
                   <li>
                     <a class="dropdown-item d-flex align-items-center">
+                      <i class="bi bi-person"></i>
+                      <form action="/profile" method="post">
+                        @csrf
+                        <button class="btn btn">Profile</button>
+                      </form>
+                    </a>
+                    <a class="dropdown-item d-flex align-items-center">
                       <i class="bi bi-box-arrow-right"></i>
                       <form action="/logout" method="post">
                         @csrf
@@ -94,6 +101,17 @@
         <!-- ======= Sidebar ======= -->
         <aside id="sidebar" class="sidebar">
           <ul class="sidebar-nav" id="sidebar-nav">
+          @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Operator')|| auth()->user()->hasRole('Dosen'))
+            <h5>Dashboard</h5>  
+          @endif
+          @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Operator')|| auth()->user()->hasRole('Dosen'))
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('dashboard') ? '' : 'collapsed' }}" href="/dashboard">
+                <i class="bi bi-archive"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+          @endif
           @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Operator')|| auth()->user()->hasRole('Dosen'))
             <h5>Pengguna</h5>  
           @endif
@@ -153,7 +171,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link {{ request()->is('rumusan') ? '' : 'collapsed' }}" href="/rumusan">
-              <i class="bi bi-book"></i>
+              <i class="bi bi-file"></i>
               <span><b>Rumusan</b></span>
             </a>
           </li>

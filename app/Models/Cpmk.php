@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Cpl;
+use App\Models\Rumusan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -12,7 +12,11 @@ class Cpmk extends Model
 
     protected $guarded = ['id'];
 
-    public function cpls() {
-        return $this->belongsToMany(Cpl::class, 'cpl_cpmk', 'cpmk_id', 'cpl_id');
+    public function rumusans()
+    {
+        return $this->belongsToMany(Rumusan::class, 'rumusan_cpl_cpmk', 'cpmk_id', 'rumusan_id')
+                    ->withPivot('cpl_id', 'skor_maks')
+                    ->withTimestamps();
     }
+    
 }
