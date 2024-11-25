@@ -12,6 +12,7 @@
         <div class="col-lg-12">
             <div class="card-body">
                 <div class="row">
+                  @if (auth()->user()->hasRole('SuperAdmin/AkunSakti'))
                     <div class="col-xxl-4 col-md-3 mt-3">
                         <div class="card info-card sales-card">
                           <div class="card-body">
@@ -28,7 +29,9 @@
                           </div>
                         </div>
                       </div>
+                      @endif
 
+                    @if (auth()->user()->hasRole('SuperAdmin/AkunSakti'))
                     <div class="col-xxl-4 col-md-3 mt-3">
                         <div class="card info-card sales-card">
                           <div class="card-body">
@@ -45,8 +48,9 @@
                           </div>
                         </div>
                       </div>
-
+                      @endif
                       
+                      @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Operator'))
                       <div class="col-xxl-4 col-md-3 mt-3">
                           <div class="card info-card sales-card">
                               <div class="card-body">
@@ -63,7 +67,9 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
+                        @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Operator')|| auth()->user()->hasRole('Dosen'))
                         <div class="col-xxl-4 col-md-3 mt-3">
                             <div class="card info-card sales-card">
                               <div class="card-body">
@@ -80,7 +86,9 @@
                               </div>
                             </div>
                         </div>
+                        @endif
 
+                    @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin'))
                     <div class="col-xxl-4 col-md-3 mt-3">
                         <div class="card info-card sales-card">
                           <div class="card-body">
@@ -148,6 +156,7 @@
                           </div>
                         </div>
                     </div>
+                    @endif
 
                 </div>
             </div>

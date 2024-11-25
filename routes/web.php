@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CpmkController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RumusanController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\DashboardController;
@@ -25,6 +26,12 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Dosen'])->g
 Route::get('/', [AuthController::class, 'index'])->middleware('guest');
 Route::post('/', [AuthController::class, 'authenticate'])->middleware('guest');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
+// ROUTE PROFILE
+Route::middleware(['auth'])->group(function() {
+    Route::get('/profile', [ProfileController::class, 'edit']);
+    Route::put('/profile', [ProfileController::class, 'update']);
+});
 
 //ROUTE ADMIN
 Route::middleware(['auth', 'role:SuperAdmin/AkunSakti'])->group(function() {

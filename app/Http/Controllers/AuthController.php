@@ -25,7 +25,7 @@ class AuthController extends Controller
             //     return redirect()->to('mahasiswa/' . {{auth()->user()->id}} . '/show');
             // }
 
-            return redirect()->intended('mahasiswa');
+            return redirect()->intended('dashboard');
         }
 
         return back()->withErrors([
