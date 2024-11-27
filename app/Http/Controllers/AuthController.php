@@ -13,6 +13,8 @@ class AuthController extends Controller
     }
 
     public function authenticate(Request $request) {
+        // dd($request->all());
+
         $credentials = $request->validate([
             'username' => 'required',
             'password' => 'required'
@@ -30,7 +32,7 @@ class AuthController extends Controller
 
         return back()->withErrors([
             'username' => 'The provided credentials do not match our records.',
-        ])->onlyInput('username');
+        ]);
 
     }
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Operator;
 use App\Models\User;
+use App\Models\Operator;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class OperatorController extends Controller
 {
@@ -26,16 +28,28 @@ class OperatorController extends Controller
             'password' => 'required',
             // 'user_id' => 'required',
             'user_id' => 'numeric',
-            'nip' => 'required'
+            'nip' => 'required',
+            'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048'
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+        $path = null;
+        if ($request->hasFile('profile_picture')) {
+            // Simpan foto ke dalam folder public/profile_pictures
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        }
 
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+
+        // Jika ada password baru, maka lakukan hashing
+        if ($request->password && $request->password !== $user->password) {
+            $user->password = bcrypt($request->password);
+        }
+
+        // Simpan perubahan
+        $user->save();
+        
         Operator::create([
             'user_id' => $user->id,
             'nip' => $request->nip,
@@ -66,10 +80,20 @@ class OperatorController extends Controller
         $operator = Operator::findOrFail($id);
         $user = User::findOrFail($operator->user_id);
 
+        $path = $user->profile_picture; // Simpan path lama jika tidak diupdate
+        if ($request->hasFile('profile_picture')) {
+            // Hapus foto lama jika ada
+            if ($path) {
+                Storage::disk('public')->delete($path);
+            }
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        }
+
         $user->update([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
+            'profile_picture' => $path,
             'password' => bcrypt($request->password ?? $user->password),
         ]);
 

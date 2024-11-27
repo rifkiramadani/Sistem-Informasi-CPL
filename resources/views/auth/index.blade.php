@@ -77,14 +77,14 @@
                         <label for="username" class="form-label">Username</label>
                         <div class="input-group has-validation">
                           {{-- <span class="input-group-text" id="inputGroupPrepend">@</span> --}}
-                          <input type="text" name="username" class="form-control" id="username" name="username" required="">
+                          <input type="text" name="username" class="form-control" id="username" name="username" required>
                           <div class="invalid-feedback">Masukkan username.</div>
                         </div>
                       </div>
   
                       <div class="col-12">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" id="password" name="password" required="">
+                        <input type="password" name="password" class="form-control" id="password" name="password" required>
                         <div class="invalid-feedback">Masukkan password!</div>
                       </div>
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Admin;
 use App\Models\User;
+use App\Models\Admin;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -19,6 +21,7 @@ class AdminController extends Controller
     }
 
     public function store(Request $request) {
+
         $validated = $request->validate([
             'name' => 'required',
             'username' => 'required',
@@ -26,13 +29,21 @@ class AdminController extends Controller
             'password' => 'required',
             // 'user_id' => 'required',
             'user_id' => 'numeric',
-            'nip' => 'required'
+            'nip' => 'required',
+            'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
+
+        $path = null;
+        if ($request->hasFile('profile_picture')) {
+            // Simpan foto ke dalam folder public/profile_pictures
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        }
 
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
+            'profile_picture' => $path,
             'password' => bcrypt($request->password),
         ]);
 
@@ -48,30 +59,45 @@ class AdminController extends Controller
 
     public function edit($id) {
         return view('admin.edit', [
-            'admin' => Admin::find($id)
+            'admin' => Admin::find($id),
         ]);
     }
 
     public function update(Request $request, $id) {
+        $admin = Admin::findOrFail($id);
+        $user = User::findOrFail($admin->user_id);
+
         $validated = $request->validate([
             'name' => 'required',
             'username' => 'required',
             'email' => 'required|email:dns',
+            'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'password' => 'required',
             // 'user_id' => 'required',
             'user_id' => 'numeric',
-            'nip' => 'required'
+            'nip' => 'required',
         ]);
 
-        $admin = Admin::findOrFail($id);
-        $user = User::findOrFail($admin->user_id);
-
-        $user->update([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password ?? $user->password),
-        ]);
+        $path = $user->profile_picture; // Simpan path lama jika tidak diupdate
+        if ($request->hasFile('profile_picture')) {
+            // Hapus foto lama jika ada
+            if ($path) {
+                Storage::disk('public')->delete($path);
+            }
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        }
+        
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        
+        // Jika ada password baru, maka lakukan hashing
+        if ($request->password && $request->password !== $user->password) {
+            $user->password = bcrypt($request->password);
+        }
+        
+        // Simpan perubahan
+        $user->save();
 
         $admin->update([
             'nip' => $request->nip

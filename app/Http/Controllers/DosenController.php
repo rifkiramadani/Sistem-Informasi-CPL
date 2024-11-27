@@ -7,6 +7,7 @@ use App\Models\Dosen;
 use App\Models\Mata_kuliah;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class DosenController extends Controller
 {
@@ -26,18 +27,27 @@ class DosenController extends Controller
             'name' => 'required',
             'username' => 'required',
             'email' => 'required|email:dns',
+            'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'password' => 'required',
             // 'user_id' => 'required',
             'user_id' => 'numeric',
             'nip' => 'required'
         ]);
 
+        $path = null;
+        if ($request->hasFile('profile_picture')) {
+            // Simpan foto ke dalam folder public/profile_pictures
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        }
+        
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
+            'profile_picture' => $path,
             'password' => bcrypt($request->password),
         ]);
+        
 
         Dosen::create([
             'user_id' => $user->id,
@@ -70,13 +80,28 @@ class DosenController extends Controller
         $dosen = Dosen::findOrFail($id);
         $user = User::findOrFail($dosen->user_id);
 
-        $user->update([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password ?? $user->password),
-        ]);
+        $path = $user->profile_picture; // Simpan path lama jika tidak diupdate
+        if ($request->hasFile('profile_picture')) {
+            // Hapus foto lama jika ada
+            if ($path) {
+                Storage::disk('public')->delete($path);
+            }
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        }
 
+
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+
+        // Jika ada password baru, maka lakukan hashing
+        if ($request->password && $request->password !== $user->password) {
+            $user->password = bcrypt($request->password);
+        }
+
+        // Simpan perubahan
+        $user->save();
+        
         $dosen->update([
             'nip' => $request->nip
         ]);

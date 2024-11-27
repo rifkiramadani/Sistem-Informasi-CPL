@@ -16,7 +16,7 @@
                   </ul>
                 </div>
             @endif
-            <form action="/dosen/{{ $dosen->id }}" method="post">
+            <form action="/dosen/{{ $dosen->id }}" method="post" enctype="multipart/form-data">
               @csrf
               @method('PUT')
               <div class="mb-3">
@@ -38,6 +38,16 @@
               <div class="mb-3">
                 <label for="nip">Nip</label>
                 <input type="text" class="form-control" name="nip" id="nip" value="{{ $dosen->nip }}" required></input>
+              </div>
+              <div class="mb-3">
+                <label for="profile_picture" class="form-label">Profile Picture</label>
+                <input type="file" name="profile_picture" id="profile_picture" class="form-control">
+                @if ($dosen->user->profile_picture)
+                    <img src="{{ asset('storage/' . $dosen->user->profile_picture) }}" alt="Profile Picture" class="img-thumbnail mt-2" width="150">
+                @endif
+                {{-- @error('profile_picture')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror --}}
               </div>
               <button class="btn btn-primary" type="submit">+ Ubah Data</button>
             </form>

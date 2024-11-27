@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -37,12 +39,17 @@ class ProfileController extends Controller
             $user->profile_picture = $path;
         }
 
-        $user->update([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+
+        // Jika ada password baru, maka lakukan hashing
+        if ($request->password && $request->password !== $user->password) {
+            $user->password = bcrypt($request->password);
+        }
+
+        // Simpan perubahan
+        $user->save();
 
         return redirect('/profile')->with('success', 'Data Profile Berhasil Di Ubah');
 

@@ -16,7 +16,7 @@
                   </ul>
                 </div>
             @endif
-            <form action="/dosen" method="post">
+            <form action="/dosen" method="post" enctype="multipart/form-data">
               @csrf
               <div class="mb-3">
                 <label for="name">Nama</label>
@@ -37,6 +37,13 @@
               <div class="mb-3">
                 <label for="nip">Nip</label>
                 <input type="text" class="form-control" name="nip" id="nip" required></input>
+              </div>
+              <div class="mb-3">
+                <label for="profile_picture" class="form-label">Profile Picture</label>
+                <input type="file" name="profile_picture" id="profile_picture" class="form-control">
+                {{-- @error('profile_picture')
+                    <small class="text-danger">{{ $message }}</small>
+                @enderror --}}
               </div>
               <button class="btn btn-primary" type="submit">+ Tambah Data</button>
             </form>
