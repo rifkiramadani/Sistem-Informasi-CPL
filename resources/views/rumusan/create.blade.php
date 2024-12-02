@@ -7,6 +7,15 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Tambah Rumusan</h5>
+
+                    <!-- Success message -->
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <!-- Error messages -->
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -16,6 +25,7 @@
                             </ul>
                         </div>
                     @endif
+
                     <form action="/rumusan" method="post">
                         @csrf
                         <div class="mb-3">

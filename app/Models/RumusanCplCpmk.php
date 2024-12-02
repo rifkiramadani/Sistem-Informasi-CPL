@@ -9,6 +9,8 @@ class RumusanCplCpmk extends Model
 {
     use HasFactory;
 
+    protected $table = 'rumusan_cpl_cpmk';
+
     protected $fillable = [
         'rumusan_cpl_id',
         'cpmk_id'
