@@ -28,6 +28,7 @@ class RumusanController extends Controller
    }
 
    public function store(Request $request) {
+    dd($request->all());
     // Validasi input
     $validated = $request->validate([
         'mata_kuliah_id' => 'required|exists:mata_kuliahs,id',
@@ -36,7 +37,7 @@ class RumusanController extends Controller
         'skor_maks' => 'array',
         'cpl_id.*' => 'exists:cpls,id',
         'cpmk_id.*' => 'exists:cpmks,id',
-        'skor_maks.*' => 'nullable|numeric|min:0',
+        'skor_maks.*' => 'numeric|min:0',
     ]);
 
     // Buat data rumusan baru
