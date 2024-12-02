@@ -10,6 +10,10 @@ class Semester extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name'
+    ];
+
     public function mataKuliahs() {
         return $this->hasMany(Mata_kuliah::class);
     }

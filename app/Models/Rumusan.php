@@ -31,5 +31,5 @@ class Rumusan extends Model
                     ->withPivot('cpl_id', 'skor_maks')
                     ->withTimestamps();
     }
-    
+
 }
