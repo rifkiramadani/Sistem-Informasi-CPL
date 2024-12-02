@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Cpl;
 use App\Models\Dosen;
 use App\Models\Semester;
-use App\Models\Mata_kuliah;
 use App\Models\Mahasiswa;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
