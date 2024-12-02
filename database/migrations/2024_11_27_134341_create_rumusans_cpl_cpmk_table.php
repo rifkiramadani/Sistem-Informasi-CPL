@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rumusans_cpl_cpmk', function (Blueprint $table) {
+        Schema::create('rumusan_cpmk', function (Blueprint $table) {
             $table->id();
             $table->integer('rumusan_cpl_id');
             $table->integer('cpmk_id');
-            $table->integer('skor_maks');
+            // $table->integer('skor_maks');
             $table->timestamps();
         });
     }

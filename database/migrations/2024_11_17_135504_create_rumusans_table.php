@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('rumusans', function (Blueprint $table) {
             $table->id();
             $table->integer('mata_kuliah_id');
-            $table->integer('cpl_id');
-            $table->integer('cpmk_id');
+            // $table->integer('cpl_id');
+            // $table->integer('cpmk_id');
             $table->timestamps();
         });
     }

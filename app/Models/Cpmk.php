@@ -18,5 +18,10 @@ class Cpmk extends Model
                     ->withPivot('cpl_id', 'skor_maks')
                     ->withTimestamps();
     }
-    
+
+    public function rumusanCplCpmks()
+    {
+        $this->hasMany(RumusanCplCpmk::class);
+    }
+
 }
