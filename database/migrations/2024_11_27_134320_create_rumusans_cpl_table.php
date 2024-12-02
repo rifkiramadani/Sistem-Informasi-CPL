@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rumusan_cpl_cpmk', function (Blueprint $table) {
+        Schema::create('rumusans_cpl', function (Blueprint $table) {
             $table->id();
             $table->integer('rumusan_id');
             $table->integer('cpl_id');
-            $table->integer('cpmk_id');
-            $table->integer('skor_maks');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rumusan_cpl_cpmk');
+        Schema::dropIfExists('rumusans_cpl');
     }
 };
