@@ -22,9 +22,9 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
- 
+
             // if(Auth::user()->hasRole('Mahasiswa')) {
-            //     return redirect()->to('mahasiswa/' . {{auth()->user()->id}} . '/show');
+            //     return redirect()->to('mahasiswa/' . auth()->user()->id . '/show');
             // }
 
             return redirect()->intended('dashboard');
@@ -38,11 +38,11 @@ class AuthController extends Controller
 
     public function logout(Request $request) {
         Auth::logout();
- 
+
         $request->session()->invalidate();
-    
+
         $request->session()->regenerateToken();
-    
+
         return redirect('/');
     }
 }
