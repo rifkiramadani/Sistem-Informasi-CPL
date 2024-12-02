@@ -18,8 +18,14 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolePermissionSeeder::class,
             UserSeeder::class,
-            CpmkSeeders::class,
             SemesterSeeder::class,
+            AdminSeeder::class,
+            CplSeeder::class,
+            MataKuliahSeeder::class,
+            DosenSeeder::class,
+            // DosenMataKuliahSeeder::class, // ! there is error
+            OperatorSeeder::class,
+            CpmkSeeder::class
         ]);
     }
 }
