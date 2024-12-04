@@ -16,14 +16,17 @@ class RumusanCpl extends Model
         'cpl_id'
     ];
 
-    public function rumusan(){
-        $this->belongsTo(Rumusan::class);
+    public function rumusan()
+    {
+        return $this->belongsTo(Rumusan::class);
     }
-    public function cpl(){
-        $this->belongsTo(Cpl::class);
+    public function cpl()
+    {
+        return $this->belongsTo(Cpl::class);
     }
 
-    public function rumusanCplCpmks() {
-        $this->hasMany(RumusanCplCpmk::class);
+    public function rumusanCplCpmks()
+    {
+        return $this->hasMany(RumusanCplCpmk::class);
     }
 }

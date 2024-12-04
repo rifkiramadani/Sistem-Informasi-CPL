@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('rumusan_cpl_id');
             $table->integer('cpmk_id');
-            // $table->integer('skor_maks');
+            $table->integer('skor_maks');
             $table->timestamps();
         });
     }

@@ -15,10 +15,8 @@ class RumusanController extends Controller
 {
     public function index()
     {
-        //    $rumusan =  Rumusan::with(['mata_kuliah', 'cpls', 'cplCpmks'])->get();
-//    dd($rumusan);
         return view('rumusan.index', [
-            'rumusans' => Rumusan::with(['mata_kuliah', 'cpls', 'cplCpmks'])->get()
+            'rumusans' => Rumusan::all()
         ]);
     }
 
@@ -73,7 +71,7 @@ class RumusanController extends Controller
             \DB::commit();
 
             // Redirect with success message
-            return redirect()->back()->with('success', 'Rumusan has been successfully created!');
+            return redirect()->route('rumusan.index')->with('success', 'Rumusan has been successfully created!');
         } // In your controller method's catch block
         catch (\Exception $e) {
             // Rollback the transaction if anything goes wrong

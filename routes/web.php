@@ -53,7 +53,7 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function()
     Route::delete('/operator/{id}', [OperatorController::class, 'destroy']);
 });
 
-// ROUTE DOSEN 
+// ROUTE DOSEN
 Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator'])->group(function() {
     //CRUD DOSEN
     Route::get('/dosen', [DosenController::class, 'index']);
@@ -69,12 +69,12 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator'])->group(f
 // ROUTE MAHASISWA
 Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|Dosen'])->group(function() {
     Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
-    
+
 });
 
 // ROUTE RUMUSAN
 Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
-    Route::get('/rumusan', [RumusanController::class, 'index']);
+    Route::get('/rumusan', [RumusanController::class, 'index'])->name('rumusan.index');
     Route::get('/rumusan/create', [RumusanController::class, 'create']);
     Route::post('/rumusan', [RumusanController::class, 'store']);
     Route::get('/rumusan/{id}/edit', [RumusanController::class, 'edit']);

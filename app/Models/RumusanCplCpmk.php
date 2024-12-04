@@ -13,15 +13,16 @@ class RumusanCplCpmk extends Model
 
     protected $fillable = [
         'rumusan_cpl_id',
-        'cpmk_id'
+        'cpmk_id',
+        'skor_maks'
     ];
 
     public function rumusanCpl()
     {
-        $this->belongsTo(RumusanCpl::class);
+        return $this->belongsTo(RumusanCpl::class);
     }
 
     public function cpmk() {
-        $this->belongsTo(Cpmk::class);
+        return $this->belongsTo(Cpmk::class);
     }
 }
