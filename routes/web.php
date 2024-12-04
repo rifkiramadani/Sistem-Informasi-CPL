@@ -24,7 +24,7 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Dosen'])->g
 
 // ROUTE AUTHENTICATION
 Route::get('/', [AuthController::class, 'index'])->middleware('guest');
-Route::post('/', [AuthController::class, 'authenticate'])->middleware('guest');
+Route::post('/', [AuthController::class, 'authenticate'])->middleware('guest')->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
 // ROUTE PROFILE
@@ -67,10 +67,29 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator'])->group(f
 });
 
 // ROUTE MAHASISWA
-Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|Dosen'])->group(function() {
-    Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|Dosen'])->group(function () {
+    // Index route (list all Mahasiswa)
+    Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index');
 
+    // Create route (show the form to create a new Mahasiswa)
+    Route::get('/mahasiswa/create', [MahasiswaController::class, 'create'])->name('mahasiswa.create');
+
+    // Store route (store the new Mahasiswa in the database)
+    Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
+
+    // Edit route (show the form to edit an existing Mahasiswa)
+    Route::get('/mahasiswa/{id}/edit', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
+
+    // Update route (update an existing Mahasiswa)
+    Route::put('/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
+
+    // Show route (show details of a specific Mahasiswa)
+    Route::get('/mahasiswa/{id}', [MahasiswaController::class, 'show'])->name('mahasiswa.show');
+
+    // Destroy route (delete a Mahasiswa)
+    Route::delete('/mahasiswa/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
 });
+
 
 // ROUTE RUMUSAN
 Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
