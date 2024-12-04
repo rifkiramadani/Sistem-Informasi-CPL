@@ -9,7 +9,7 @@ class RumusanCpl extends Model
 {
     use HasFactory;
 
-    protected $table = 'rumusan_cpl';
+    protected $table = 'rumusan_cpls';
 
     protected $fillable = [
         'rumusan_id',

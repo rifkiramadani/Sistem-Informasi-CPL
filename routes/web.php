@@ -78,7 +78,7 @@ Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
     Route::get('/rumusan/create', [RumusanController::class, 'create']);
     Route::post('/rumusan', [RumusanController::class, 'store']);
     Route::get('/rumusan/{id}/edit', [RumusanController::class, 'edit']);
-    Route::put('/rumusan/{id}', [RumusanController::class, 'update']);
+    Route::put('/rumusan/{id}', [RumusanController::class, 'update'])->name('rumusan.update');
     Route::delete('/rumusan/{id}', [RumusanController::class, 'destroy']);
 });
 

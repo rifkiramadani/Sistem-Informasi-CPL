@@ -88,8 +88,10 @@ class RumusanController extends Controller
 
     public function edit($id)
     {
+        $rumusan = Rumusan::findOrFail($id);
+
         return view('rumusan.edit', [
-            'rumusan' => Rumusan::with(['mata_kuliah', 'cpls', 'cplCpmks'])->findOrFail($id),
+            'rumusan' => $rumusan,
             'mata_kuliahs' => Mata_kuliah::all(),
             'cpls' => Cpl::all(),
             'cpmks' => Cpmk::all()
@@ -98,47 +100,78 @@ class RumusanController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validasi input
-        $validated = $request->validate([
+        $request->validate([
             'mata_kuliah_id' => 'required|exists:mata_kuliahs,id',
             'cpl_id' => 'required|array',
             'cpmk_id' => 'required|array',
-            'skor_maks' => 'array',
-            'cpl_id.*' => 'exists:cpls,id',
-            'cpmk_id.*' => 'exists:cpmks,id',
-            'skor_maks.*' => 'nullable|numeric|min:0',
+            'skor_maks' => 'required|array',
         ]);
 
-        // Ambil data rumusan yang akan diupdate
+        // Fetch the rumusan to update
         $rumusan = Rumusan::findOrFail($id);
         $rumusan->mata_kuliah_id = $request->mata_kuliah_id;
-        $rumusan->save();
 
-        // Hapus relasi lama di pivot
-        $rumusan->cplCpmks()->detach();
+        // Begin the transaction
+        \DB::beginTransaction();
 
-        // Tambahkan data baru ke tabel pivot
-        foreach ($request->cpl_id as $cplId) {
-            foreach ($request->cpmk_id[$cplId] ?? [] as $cpmkId) {
-                $skorMaks = $request->skor_maks[$cpmkId] ?? 0;
+        try {
+            // Save the rumusan (it could be updated directly since we already set the mata_kuliah_id)
+            $rumusan->save();
 
-                // Menambahkan data baru ke pivot
-                $rumusan->cplCpmks()->attach($cpmkId, [
-                    'cpl_id' => $cplId,
-                    'skor_maks' => $skorMaks,
+            $rumusan->rumusanCpls->each(function ($rumusanCpl) {
+                $rumusanCpl->rumusanCplCpmks()->delete();  // Delete the associated rumusanCplCpmks
+            });
+
+            // Delete the rumusanCpl entries (this removes the CPL associations)
+            $rumusan->rumusanCpls()->delete();
+
+            // Loop through the selected CPL and associated CPMK
+            foreach ($request->cpl_id as $cpl_id) {
+                // Create the RumusanCpl if it doesn't exist or update it if necessary
+                $rumusanCpl = RumusanCpl::create([
+                    'rumusan_id' => $rumusan->id,
+                    'cpl_id' => $cpl_id,
                 ]);
-            }
-        }
 
-        return redirect('/rumusan')->with('success', 'Data Rumusan Berhasil Diubah');
+                // For each CPL, create the associated CPMK
+                if (isset($request->cpmk_id[$cpl_id])) {
+                    foreach ($request->cpmk_id[$cpl_id] as $index => $cpmk_id) {
+                        // Create RumusanCplCpmk associations
+                        $skorMaks = isset($request->skor_maks[$index]) ? $request->skor_maks[$index] : 0;
+
+                        RumusanCplCpmk::create([
+                            'rumusan_cpl_id' => $rumusanCpl->id,
+                            'cpmk_id' => $cpmk_id,
+                            'skor_maks' => $skorMaks,  // If no skor_maks provided, default to 0
+                        ]);
+                    }
+                }
+            }
+
+            // Commit the transaction
+            \DB::commit();
+
+            // Redirect with success message
+            return redirect()->route('rumusan.index')->with('success', 'Rumusan has been successfully updated!');
+        } catch (\Exception $e) {
+            // Rollback the transaction if anything goes wrong
+            \DB::rollback();
+
+            // Log the exception (optional, but good for debugging)
+            \Log::error('Error occurred while updating Rumusan:', ['error' => $e]);
+
+            // Return error message with only the exception message or custom message
+            return back()->withErrors(['error' => 'Something went wrong! Please try again.']);
+        }
     }
+
+
+
+
 
     public function destroy($id)
     {
         $rumusan = Rumusan::findOrFail($id);
-
-        // Hapus relasi pivot terlebih dahulu
-        $rumusan->cplCpmks()->detach();
 
         // Hapus data rumusan
         $rumusan->delete();

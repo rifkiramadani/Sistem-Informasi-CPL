@@ -99,7 +99,17 @@
                                                 @endphp
                                                 {{ $totalSkorMaks }}
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                <a href="/rumusan/{{ $rumusan->id }}/edit" class="btn btn-warning">
+                                                    Edit</a>
+                                                <form action="/rumusan/{{ $rumusan->id }}" method="post"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE ')
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="return confirm('Yakin Ingin Menghapus Data???')">Delete</button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
