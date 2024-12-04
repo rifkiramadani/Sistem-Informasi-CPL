@@ -88,16 +88,19 @@
                                                 @endforeach
                                             </td>
                                             <td>
-                                                @php
-                                                    // Calculate the total 'skor_maks' for the current rumusan
-                                                    $totalSkorMaks = 0;
-                                                    foreach ($rumusan->rumusanCpls as $cpl) {
-                                                        foreach ($cpl->rumusanCplCpmks as $cpmk) {
-                                                            $totalSkorMaks += $cpmk->skor_maks;
-                                                        }
-                                                    }
-                                                @endphp
-                                                {{ $totalSkorMaks }}
+                                                @foreach ($rumusan->rumusanCpls as $cpl)
+                                                <ul>
+                                                    <li>
+                                                        @foreach ($cpl->rumusanCplCpmks as $cpmk)
+                                                            <ul>
+                                                                <li>
+                                                                    {{ $cpmk->skor_maks }}
+                                                                </li>
+                                                            </ul>
+                                                        @endforeach
+                                                    </li>
+                                                </ul>
+                                            @endforeach
                                             </td>
                                             <td>
                                                 <a href="/rumusan/{{ $rumusan->id }}/edit" class="btn btn-warning">
