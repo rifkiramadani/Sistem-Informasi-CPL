@@ -77,8 +77,9 @@
                                                     <div class="mt-2">
                                                         <input class="form-control" type="number"
                                                                name="skor_maks[{{ $cpl->id }}][{{ $cpmk->id }}]"
+                                       value="{{ $skorMaks }}"
                                                                placeholder="Masukkan Skor Maks"
-                                                               value="{{ $skorMaks }}">
+                                                               >
                                                     </div>
                                                 </div>
                                             @endforeach

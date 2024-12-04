@@ -39,7 +39,6 @@ class RumusanController extends Controller
             'skor_maks' => 'required|array',
         ]);
 
-        // Begin the transaction
         \DB::beginTransaction();
 
         try {
@@ -57,11 +56,15 @@ class RumusanController extends Controller
 
                 // For each CPL, create the associated CPMK
                 if (isset($request->cpmk_id[$cpl_id])) {
-                    foreach ($request->cpmk_id[$cpl_id] as $index => $cpmk_id) {
+                    foreach ($request->cpmk_id[$cpl_id] as $cpmk_id) {
+                        // Handle skor_maks based on cpl_id and cpmk_id
+                        $skor_maks = $request->skor_maks[$cpl_id][$cpmk_id] ?? null;
+
+                        // Create the RumusanCplCpmk with the associated Skor Maks
                         RumusanCplCpmk::create([
                             'rumusan_cpl_id' => $rumusanCpl->id,
                             'cpmk_id' => $cpmk_id,
-                            'skor_maks' => $request->skor_maks[$index], // Assuming skor_maks corresponds to the order of selected cpmks
+                            'skor_maks' => $skor_maks,
                         ]);
                     }
                 }
@@ -70,20 +73,12 @@ class RumusanController extends Controller
             // Commit the transaction
             \DB::commit();
 
-            // Redirect with success message
             return redirect()->route('rumusan.index')->with('success', 'Rumusan has been successfully created!');
-        } // In your controller method's catch block
-        catch (\Exception $e) {
-            // Rollback the transaction if anything goes wrong
+        } catch (\Exception $e) {
             \DB::rollback();
-
-            // Log the exception (optional, but good for debugging)
             \Log::error('Error occurred while creating Rumusan:', ['error' => $e]);
-
-            // Return error message with only the exception message or custom message
             return back()->withErrors(['error' => 'Something went wrong! Please try again.']);
         }
-
     }
 
     public function edit($id)
@@ -111,15 +106,15 @@ class RumusanController extends Controller
         $rumusan = Rumusan::findOrFail($id);
         $rumusan->mata_kuliah_id = $request->mata_kuliah_id;
 
-        // Begin the transaction
         \DB::beginTransaction();
 
         try {
             // Save the rumusan (it could be updated directly since we already set the mata_kuliah_id)
             $rumusan->save();
 
+            // Delete previous associations
             $rumusan->rumusanCpls->each(function ($rumusanCpl) {
-                $rumusanCpl->rumusanCplCpmks()->delete();  // Delete the associated rumusanCplCpmks
+                $rumusanCpl->rumusanCplCpmks()->delete();
             });
 
             // Delete the rumusanCpl entries (this removes the CPL associations)
@@ -127,7 +122,6 @@ class RumusanController extends Controller
 
             // Loop through the selected CPL and associated CPMK
             foreach ($request->cpl_id as $cpl_id) {
-                // Create the RumusanCpl if it doesn't exist or update it if necessary
                 $rumusanCpl = RumusanCpl::create([
                     'rumusan_id' => $rumusan->id,
                     'cpl_id' => $cpl_id,
@@ -135,14 +129,15 @@ class RumusanController extends Controller
 
                 // For each CPL, create the associated CPMK
                 if (isset($request->cpmk_id[$cpl_id])) {
-                    foreach ($request->cpmk_id[$cpl_id] as $index => $cpmk_id) {
-                        // Create RumusanCplCpmk associations
-                        $skorMaks = isset($request->skor_maks[$index]) ? $request->skor_maks[$index] : 0;
+                    foreach ($request->cpmk_id[$cpl_id] as $cpmk_id) {
+                        // Handle skor_maks based on cpl_id and cpmk_id
+                        $skor_maks = $request->skor_maks[$cpl_id][$cpmk_id] ?? null;
 
+                        // Create the RumusanCplCpmk with the associated Skor Maks
                         RumusanCplCpmk::create([
                             'rumusan_cpl_id' => $rumusanCpl->id,
                             'cpmk_id' => $cpmk_id,
-                            'skor_maks' => $skorMaks,  // If no skor_maks provided, default to 0
+                            'skor_maks' => $skor_maks,
                         ]);
                     }
                 }
@@ -151,22 +146,13 @@ class RumusanController extends Controller
             // Commit the transaction
             \DB::commit();
 
-            // Redirect with success message
             return redirect()->route('rumusan.index')->with('success', 'Rumusan has been successfully updated!');
         } catch (\Exception $e) {
-            // Rollback the transaction if anything goes wrong
             \DB::rollback();
-
-            // Log the exception (optional, but good for debugging)
             \Log::error('Error occurred while updating Rumusan:', ['error' => $e]);
-
-            // Return error message with only the exception message or custom message
             return back()->withErrors(['error' => 'Something went wrong! Please try again.']);
         }
     }
-
-
-
 
 
     public function destroy($id)
