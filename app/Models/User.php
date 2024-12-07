@@ -31,19 +31,19 @@ class User extends Authenticatable
     ];
 
     public function admins() {
-        return $this->HasMany(Admin::class);
+        return $this->HasOne(Admin::class);
     }
 
     public function operators() {
-        return $this->HasMany(Operator::class);
+        return $this->HasOne(Operator::class);
     }
 
     public function dosens() {
-        return $this->HasMany(Dosen::class);
+        return $this->HasOne(Dosen::class);
     }
 
     public function mahasiswas() {
-        return $this->HasMany(Mahasiswa::class);
+        return $this->HasOne(Mahasiswa::class);
     }
 
     /**

@@ -93,6 +93,13 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|D
 
     // Destroy route (delete a Mahasiswa)
     Route::delete('/mahasiswa/{id}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+
+    // Route for showing the form to attach a RumusanDosen
+    Route::get('/mahasiswa/{id}/attach-rumusan-dosen', [MahasiswaController::class, 'attachRumusanDosenForm'])->name('mahasiswa.attachRumusanDosenForm');
+
+    // Route for attaching RumusanDosen to Mahasiswa
+    Route::post('/mahasiswa/{id}/attach-rumusan-dosen', [MahasiswaController::class, 'attachRumusanDosen'])->name('mahasiswa.attachRumusanDosen');
+
 });
 
 

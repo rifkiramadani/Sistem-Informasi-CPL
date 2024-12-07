@@ -39,9 +39,9 @@
                                 @foreach ($dosens as $dosen)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
-                                        <td class="fw-bold">{{ $dosen->user->name }}</td>
-                                        <td>{{ $dosen->user->username }}</td>
-                                        <td>{{ $dosen->user->email }}</td>
+                                        <td class="fw-bold">{{ $dosen->user->name ?? 'Tidak ada name' }}</td>
+                                        <td>{{ $dosen->user->username ?? 'Tidak ada username' }}</td>
+                                        <td>{{ $dosen->user->email ?? 'Tidak ada email' }}</td>
                                         <td>{{ $dosen->nip }}</td>
                                         <td>
                                             @foreach ($dosen->rumusanDosens as $rumusan)

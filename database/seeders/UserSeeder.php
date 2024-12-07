@@ -66,6 +66,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
         ]);
         $operator->assignRole($operatorRole); // Assign Operator Role
+        Operator::create(['user_id' => $operator->id, 'nip' => '3123151134']);
 
         // Dosen
         $dosen = User::create([
@@ -84,6 +85,7 @@ class UserSeeder extends Seeder
         // Create related Dosen record
         $dosenProfile = Dosen::create([
             'user_id' => $dosen->id,
+            'nip'=>'123456789'
             // Add other necessary attributes for Dosen model, if applicable
         ]);
 
@@ -105,6 +107,7 @@ class UserSeeder extends Seeder
         $mahasiswaProfile = Mahasiswa::create([
             'user_id' => $mahasiswa->id,
             'semester_id' => 1, // Assign a default semester, adjust as needed
+            'npm' => '123456789'
             // Add other necessary attributes for Mahasiswa model
         ]);
 
@@ -121,7 +124,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
         ]);
         $dwiSaputra->assignRole($dosenRole); // Assign Dosen Role
-        Dosen::create(['user_id' => $dwiSaputra->id]);
+        Dosen::create(['user_id' => $dwiSaputra->id, 'nip' => '123456799']);
 
         // More Dosen with profiles (example)
         $salman = User::create([
@@ -136,7 +139,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
         ]);
         $salman->assignRole($dosenRole);
-        Dosen::create(['user_id' => $salman->id]);
+        Dosen::create(['user_id' => $salman->id, 'nip' => '123456719']);
 
         // Operator
         $ariq = User::create([
@@ -151,7 +154,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
         ]);
         $ariq->assignRole($operatorRole); // Assign Operator Role
-        Operator::create(['user_id' => $ariq->id]);
+        Operator::create(['user_id' => $ariq->id, 'nip' => '31231234']);
 
         // More Users and Profiles...
         // Yusran Dosen Example
@@ -167,6 +170,6 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
         ]);
         $yusran->assignRole($dosenRole); // Assign Dosen Role
-        Dosen::create(['user_id' => $yusran->id]);
+        Dosen::create(['user_id' => $yusran->id, 'nip' => '143456789']);
     }
 }

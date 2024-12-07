@@ -25,4 +25,7 @@ class Mahasiswa extends Model
     public function mataKuliahs() {
         return $this->HasMany(Mata_kuliah::class);
     }
+    public function rumusanMahasiswas() {
+        return $this->HasMany(RumusanMahasiswa::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RumusanDosen;
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
 use App\Models\Semester;
@@ -106,7 +107,7 @@ class MahasiswaController extends Controller
     // Show the details of a specific Mahasiswa
     public function show($id)
     {
-        $mahasiswa = Mahasiswa::with('user', 'semester')->findOrFail($id);
+        $mahasiswa = Mahasiswa::findOrFail($id);
         return view('mahasiswa.show', compact('mahasiswa'));
     }
 
@@ -119,4 +120,31 @@ class MahasiswaController extends Controller
 
         return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa has been deleted successfully!');
     }
+
+    public function attachRumusanDosen(Request $request, $id)
+    {
+        // Validate the request
+        $request->validate([
+            'rumusan_dosen_id' => 'required|exists:rumusan_dosens,id',
+        ]);
+
+        // Find the Mahasiswa
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        // Attach the RumusanDosen to Mahasiswa via the RumusanMahasiswa model
+        $mahasiswa->rumusanMahasiswas()->create([
+            'rumusan_dosen_id' => $request->rumusan_dosen_id,
+        ]);
+
+        return redirect()->route('mahasiswa.show', $id)->with('success', 'Rumusan Dosen has been successfully attached!');
+    }
+
+    // Show the form to attach Rumusan Dosen
+    public function attachRumusanDosenForm($id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        $rumusanDosens = RumusanDosen::all();
+        return view('mahasiswa.attach_rumusan', compact('mahasiswa', 'rumusanDosens'));
+    }
+
 }

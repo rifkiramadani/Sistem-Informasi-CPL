@@ -37,6 +37,17 @@
                             </tr>
                         </table>
 
+                        <!-- List Attached Rumusan Dosen -->
+                        <h6>Attached Rumusan Dosen:</h6>
+                        <ul>
+                            @foreach ($mahasiswa->rumusanMahasiswas as $rumusanMahasiswa)
+                                <li>{{ $rumusanMahasiswa->rumusanDosen->dosen->user->name ?? 'Tidak ada name' }} - {{ $rumusanMahasiswa->rumusanDosen->rumusan->mata_kuliah->name ?? 'Tidak ada mata kuliah' }}</li>
+                            @endforeach
+                        </ul>
+
+                        <!-- Button to Attach Rumusan Dosen -->
+                        <a href="{{ route('mahasiswa.attachRumusanDosen', $mahasiswa->id) }}" class="btn btn-success">Attach Rumusan Dosen</a>
+
                         <a href="{{ route('mahasiswa.index') }}" class="btn btn-secondary">Back to List</a>
                     </div>
                 </div>
