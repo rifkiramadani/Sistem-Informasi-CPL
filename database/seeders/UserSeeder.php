@@ -3,8 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Dosen;
+use App\Models\Mahasiswa;
+use App\Models\Operator;
+use App\Models\Admin;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role; // Import Role model for assigning roles
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -21,146 +25,148 @@ class UserSeeder extends Seeder
         $dosenRole = Role::firstOrCreate(['name' => 'Dosen']);
         $mahasiswaRole = Role::firstOrCreate(['name' => 'Mahasiswa']);
 
-        // Creating the users based on the SQL data you provided
+        // Super Admin
         $superAdmin = User::create([
             'id' => 1,
             'name' => 'Super Admin',
             'username' => 'superadmin',
             'email' => 'superadmin@gmail.com',
-            'email_verified_at' => null,
+            'email_verified_at' => now(),
             'profile_picture' => 'profile_pictures/ge7mxc4OSK5AMNTrEh76L8l07aaA5gzvboytzZ54.jpg',
-            'password' => bcrypt('12345678'),  // Hashed password
-            'remember_token' => null,
-            'created_at' => '2024-11-25 08:30:29',
-            'updated_at' => '2024-11-25 08:42:59',
+            'password' => bcrypt('12345678'),
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         $superAdmin->assignRole($superAdminRole); // Assign Super Admin Role
 
+        // Admin
         $admin = User::create([
             'id' => 2,
             'name' => 'Admin',
             'username' => 'admin',
             'email' => 'admin@gmail.com',
-            'email_verified_at' => null,
+            'email_verified_at' => now(),
             'profile_picture' => null,
             'password' => bcrypt('12345678'),
-            'remember_token' => null,
-            'created_at' => '2024-11-25 07:39:42',
-            'updated_at' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         $admin->assignRole($adminRole); // Assign Admin Role
 
+        // Operator
         $operator = User::create([
             'id' => 3,
             'name' => 'Operator',
             'username' => 'operator',
             'email' => 'operator@gmail.com',
-            'email_verified_at' => null,
+            'email_verified_at' => now(),
             'profile_picture' => null,
             'password' => bcrypt('12345678'),
-            'remember_token' => null,
-            'created_at' => '2024-10-14 08:51:39',
-            'updated_at' => '2024-10-14 08:51:39',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         $operator->assignRole($operatorRole); // Assign Operator Role
 
+        // Dosen
         $dosen = User::create([
             'id' => 4,
             'name' => 'Dosen',
             'username' => 'dosen',
             'email' => 'dosen@gmail.com',
-            'email_verified_at' => null,
+            'email_verified_at' => now(),
             'profile_picture' => null,
             'password' => bcrypt('12345678'),
-            'remember_token' => null,
-            'created_at' => '2024-10-14 08:51:39',
-            'updated_at' => '2024-10-14 08:51:39',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         $dosen->assignRole($dosenRole); // Assign Dosen Role
 
+        // Create related Dosen record
+        $dosenProfile = Dosen::create([
+            'user_id' => $dosen->id,
+            // Add other necessary attributes for Dosen model, if applicable
+        ]);
+
+        // Mahasiswa
         $mahasiswa = User::create([
             'id' => 5,
             'name' => 'Mahasiswa',
             'username' => 'mahasiswa',
             'email' => 'mahasiswa@gmail.com',
-            'email_verified_at' => null,
+            'email_verified_at' => now(),
             'profile_picture' => null,
             'password' => bcrypt('12345678'),
-            'remember_token' => null,
-            'created_at' => '2024-10-14 08:51:39',
-            'updated_at' => '2024-10-14 08:51:39',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         $mahasiswa->assignRole($mahasiswaRole); // Assign Mahasiswa Role
 
-        // Additional users with specific roles
+        // Create related Mahasiswa record
+        $mahasiswaProfile = Mahasiswa::create([
+            'user_id' => $mahasiswa->id,
+            'semester_id' => 1, // Assign a default semester, adjust as needed
+            // Add other necessary attributes for Mahasiswa model
+        ]);
+
+        // Additional Dosen with profiles
         $dwiSaputra = User::create([
             'id' => 22,
             'name' => 'Dwi Saputra S.kom',
             'username' => 'dwisaputra',
             'email' => 'putor@gmail.com',
-            'email_verified_at' => null,
+            'email_verified_at' => now(),
             'profile_picture' => 'profile_pictures/wqWS3ErW6VqEMwcrt8uAOhi9jfpDWyzegwB6KlqW.png',
             'password' => bcrypt('12345678'),
-            'remember_token' => null,
-            'created_at' => '2024-11-09 07:36:34',
-            'updated_at' => '2024-11-25 08:55:24',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         $dwiSaputra->assignRole($dosenRole); // Assign Dosen Role
+        Dosen::create(['user_id' => $dwiSaputra->id]);
 
+        // More Dosen with profiles (example)
         $salman = User::create([
             'id' => 27,
             'name' => 'Muhammad Salman Alfarizi S.Kom M.Sc',
             'username' => 'salman',
             'email' => 'salman@gmail.com',
-            'email_verified_at' => null,
+            'email_verified_at' => now(),
             'profile_picture' => null,
             'password' => bcrypt('12345678'),
-            'remember_token' => null,
-            'created_at' => '2024-11-09 08:43:05',
-            'updated_at' => '2024-11-09 08:43:05',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
-        $salman->assignRole($dosenRole); // Assign Dosen Role
+        $salman->assignRole($dosenRole);
+        Dosen::create(['user_id' => $salman->id]);
 
-        $perdinan = User::create([
-            'id' => 28,
-            'name' => 'Perdinan S.H',
-            'username' => 'perdinan',
-            'email' => 'perdinan@gmail.com',
-            'email_verified_at' => null,
-            'profile_picture' => null,
-            'password' => bcrypt('12345678'),
-            'remember_token' => null,
-            'created_at' => '2024-11-11 07:14:03',
-            'updated_at' => '2024-11-11 07:14:03',
-        ]);
-        $perdinan->assignRole($dosenRole); // Assign Dosen Role
-
+        // Operator
         $ariq = User::create([
             'id' => 35,
             'name' => 'Muhammad Athariq S.komedi',
             'username' => 'ariq',
             'email' => 'ariq@gmail.com',
-            'email_verified_at' => null,
+            'email_verified_at' => now(),
             'profile_picture' => 'profile_pictures/JRnd6YWcYl6DOfQqrCnvArxayDfV5BNoCyIrw2t3.jpg',
             'password' => bcrypt('12345678'),
-            'remember_token' => null,
-            'created_at' => '2024-11-25 07:58:30',
-            'updated_at' => '2024-11-25 08:04:57',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         $ariq->assignRole($operatorRole); // Assign Operator Role
+        Operator::create(['user_id' => $ariq->id]);
 
+        // More Users and Profiles...
+        // Yusran Dosen Example
         $yusran = User::create([
             'id' => 36,
             'name' => 'Yusran Panca Putra S.Kom M.Kom',
             'username' => 'yusran',
             'email' => 'yusran@unib.ac.id',
-            'email_verified_at' => null,
+            'email_verified_at' => now(),
             'profile_picture' => 'profile_pictures/ctOSJG51V2Xo122aFhAdKVSwMJFPPwr1Sby2yx5q.jpg',
             'password' => bcrypt('12345678'),
-            'remember_token' => null,
-            'created_at' => '2024-11-25 08:12:27',
-            'updated_at' => '2024-11-25 08:20:24',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         $yusran->assignRole($dosenRole); // Assign Dosen Role
+        Dosen::create(['user_id' => $yusran->id]);
     }
 }
