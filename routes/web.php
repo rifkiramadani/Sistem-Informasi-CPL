@@ -18,7 +18,7 @@ use App\Http\Controllers\MatakuliahController;
 // });
 
 // ROUTE DASHBOARD
-Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Dosen'])->group(function() {
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Dosen'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
 });
 
@@ -28,13 +28,13 @@ Route::post('/', [AuthController::class, 'authenticate'])->middleware('guest')->
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
 // ROUTE PROFILE
-Route::middleware(['auth'])->group(function() {
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit']);
     Route::put('/profile', [ProfileController::class, 'update']);
 });
 
 //ROUTE ADMIN
-Route::middleware(['auth', 'role:SuperAdmin/AkunSakti'])->group(function() {
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);
     Route::get('/admin/create', [AdminController::class, 'create']);
     Route::post('/admin', [AdminController::class, 'store']);
@@ -44,7 +44,7 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti'])->group(function() {
 });
 
 // ROUTE OPERATOR
-Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function() {
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function () {
     Route::get('/operator', [OperatorController::class, 'index']);
     Route::get('/operator/create', [OperatorController::class, 'create']);
     Route::post('/operator', [OperatorController::class, 'store']);
@@ -54,7 +54,7 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function()
 });
 
 // ROUTE DOSEN
-Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator'])->group(function() {
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator'])->group(function () {
     //CRUD DOSEN
     Route::get('/dosen', [DosenController::class, 'index']);
     Route::get('/dosen/create', [DosenController::class, 'create']);
@@ -64,6 +64,11 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator'])->group(f
     Route::delete('/dosen/{id}', [DosenController::class, 'destroy']);
     Route::get('/dosen/{id}/matakuliah', [DosenController::class, 'addMatakuliah']);
     Route::put('/dosen/{id}/matakuliah', [DosenController::class, 'insertMatakuliah']);
+
+    // Add these routes
+    Route::get('/dosen/{id}/attach-rumusan', [DosenController::class, 'attachRumusan']);
+    Route::put('/dosen/{id}/attach-rumusan', [DosenController::class, 'insertRumusan']);
+
 });
 
 // ROUTE MAHASISWA
@@ -92,7 +97,7 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|D
 
 
 // ROUTE RUMUSAN
-Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
+Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function () {
     Route::get('/rumusan', [RumusanController::class, 'index'])->name('rumusan.index');
     Route::get('/rumusan/create', [RumusanController::class, 'create']);
     Route::post('/rumusan', [RumusanController::class, 'store']);
@@ -102,7 +107,7 @@ Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
 });
 
 // ROUTE MATA KULIAH
-Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
+Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function () {
     Route::get('/matakuliah', [MatakuliahController::class, 'index']);
     Route::get('/matakuliah/create', [MatakuliahController::class, 'create']);
     Route::post('/matakuliah', [MatakuliahController::class, 'store']);
@@ -112,7 +117,7 @@ Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function() {
 });
 
 // ROUTE CPL
-Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function() {
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function () {
     Route::get('/cpl', [CplController::class, 'index']);
     Route::get('/cpl/create', [CplController::class, 'create']);
     Route::post('/cpl', [CplController::class, 'store']);
@@ -122,7 +127,7 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function()
 });
 
 // ROUTE CPMK
-Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function() {
+Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function () {
     Route::get('/cpmk', [CpmkController::class, 'index']);
     Route::get('/cpmk/create', [CpmkController::class, 'create']);
     Route::post('/cpmk', [CpmkController::class, 'store']);

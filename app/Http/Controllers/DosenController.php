@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rumusan;
 use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Mata_kuliah;
@@ -11,18 +12,21 @@ use Illuminate\Support\Facades\Storage;
 
 class DosenController extends Controller
 {
-    public function index() {
-        return view('dosen.index',[
+    public function index()
+    {
+        return view('dosen.index', [
             "dosens" => Dosen::all(),
             "matakuliahs" => Mata_kuliah::all(),
         ]);
     }
-    
-    public function create() {
+
+    public function create()
+    {
         return view('dosen.create');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validated = $request->validate([
             'name' => 'required',
             'username' => 'required',
@@ -39,7 +43,7 @@ class DosenController extends Controller
             // Simpan foto ke dalam folder public/profile_pictures
             $path = $request->file('profile_picture')->store('profile_pictures', 'public');
         }
-        
+
         $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
@@ -47,7 +51,7 @@ class DosenController extends Controller
             'profile_picture' => $path,
             'password' => bcrypt($request->password),
         ]);
-        
+
 
         Dosen::create([
             'user_id' => $user->id,
@@ -60,13 +64,15 @@ class DosenController extends Controller
 
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         return view('dosen.edit', [
             'dosen' => Dosen::find($id),
         ]);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $validated = $request->validate([
             'name' => 'required',
             'username' => 'required',
@@ -101,15 +107,16 @@ class DosenController extends Controller
 
         // Simpan perubahan
         $user->save();
-        
+
         $dosen->update([
             'nip' => $request->nip
         ]);
 
-        return redirect('/dosen')->with('success','Data Dosen Berhasil Di Ubah');
+        return redirect('/dosen')->with('success', 'Data Dosen Berhasil Di Ubah');
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $dosen = Dosen::findOrFail($id);
         $user = User::findOrFail($dosen->user_id);
 
@@ -119,19 +126,21 @@ class DosenController extends Controller
         return redirect('/dosen')->with('success', 'Data Dosen Berhasil Di Hapus');
     }
 
-    public function addMatakuliah($id) {
-        return view('dosen.addMatakuliah',[
+    public function addMatakuliah($id)
+    {
+        return view('dosen.addMatakuliah', [
             'dosen' => Dosen::find($id),
-            'matakuliahs' => Mata_kuliah::all(), 
+            'matakuliahs' => Mata_kuliah::all(),
         ]);
     }
 
-    public function insertMatakuliah(Request $request, $id) {
+    public function insertMatakuliah(Request $request, $id)
+    {
         // dd($request->all());
 
         $validated = $request->validate([
             "mata_kuliah_id" => 'required|array',
-            "mata_kuliah_id.*" => 'numeric' 
+            "mata_kuliah_id.*" => 'numeric'
         ]);
 
         $dosen = Dosen::findOrFail($id);
@@ -145,5 +154,34 @@ class DosenController extends Controller
 
         return redirect('/dosen')->with('success', 'Set Mata Kuliah Berhasil');
     }
+
+    public function attachRumusan($id)
+    {
+        $dosen = Dosen::findOrFail($id);
+        $rumusans = Rumusan::all();  // Fetch all Rumusans
+
+        return view('dosen.attachRumusan', compact('dosen', 'rumusans'));
+    }
+
+    public function insertRumusan(Request $request, $id)
+    {
+        $validated = $request->validate([
+            "rumusan_id" => 'required|array',
+            "rumusan_id.*" => 'numeric'
+        ]);
+
+        $dosen = Dosen::findOrFail($id);  // Find Dosen by ID
+
+        // Iterate over selected rumusan_id and attach them to the dosen
+        foreach ($request->rumusan_id as $rumusanId) {
+            // Create a new RumusanDosen entry for each rumusan_id
+            $dosen->rumusanDosens()->create([
+                'rumusan_id' => $rumusanId,  // Attach rumusan to dosen
+            ]);
+        }
+
+        return redirect('/dosen')->with('success', 'Rumusan Successfully Attached');
+    }
+
 
 }
