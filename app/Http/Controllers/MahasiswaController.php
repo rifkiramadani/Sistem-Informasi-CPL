@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RumusanDosen;
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
+use App\Models\RumusanMahasiswa;
 use App\Models\Semester;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -121,30 +122,67 @@ class MahasiswaController extends Controller
         return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa has been deleted successfully!');
     }
 
-    public function attachRumusanDosen(Request $request, $id)
+    // ! handle unique combination
+    public function attachRumusanDosen(Request $request, $mahasiswaId)
     {
-        // Validate the request
+        // Validate the input
         $request->validate([
-            'rumusan_dosen_id' => 'required|exists:rumusan_dosens,id',
+            'rumusan_dosen_id' => 'array',
+            'rumusan_dosen_id.*' => 'numeric|exists:rumusan_dosens,id',  // Ensure the IDs are valid
         ]);
 
-        // Find the Mahasiswa
-        $mahasiswa = Mahasiswa::findOrFail($id);
+        // Find the Mahasiswa by ID
+        $mahasiswa = Mahasiswa::findOrFail($mahasiswaId);
 
-        // Attach the RumusanDosen to Mahasiswa via the RumusanMahasiswa model
-        $mahasiswa->rumusanMahasiswas()->create([
-            'rumusan_dosen_id' => $request->rumusan_dosen_id,
-        ]);
+        // If no rumusan_dosen_id is provided, delete all associated records
+        if (empty($request->rumusan_dosen_id)) {
+            // Delete all RumusanMahasiswa records associated with this Mahasiswa
+            $mahasiswa->rumusanMahasiswas()->delete();
+            return redirect()->route('mahasiswa.show', $mahasiswa->id)
+                ->with('success', 'All Rumusan Dosen relationships removed.');
+        }
 
-        return redirect()->route('mahasiswa.show', $id)->with('success', 'Rumusan Dosen has been successfully attached!');
+        // Get the current rumusan_dosen_ids already attached to the mahasiswa
+        $existingRumusanDosenIds = $mahasiswa->rumusanMahasiswas->pluck('rumusan_dosen_id')->toArray();
+
+        // Get the new rumusan_dosen_ids from the request
+        $newRumusanDosenIds = $request->rumusan_dosen_id;
+
+        // Find the IDs to attach (those that are in $newRumusanDosenIds but not in $existingRumusanDosenIds)
+        $toAttach = array_diff($newRumusanDosenIds, $existingRumusanDosenIds);
+
+        // Find the IDs to detach (those that are in $existingRumusanDosenIds but not in $newRumusanDosenIds)
+        $toDetach = array_diff($existingRumusanDosenIds, $newRumusanDosenIds);
+
+        // Attach new RumusanDosen entries
+        foreach ($toAttach as $rumusanDosenId) {
+            RumusanMahasiswa::create([
+                'mahasiswa_id' => $mahasiswa->id,
+                'rumusan_dosen_id' => $rumusanDosenId,
+            ]);
+        }
+
+        // Detach RumusanDosen entries
+        RumusanMahasiswa::where('mahasiswa_id', $mahasiswa->id)
+            ->whereIn('rumusan_dosen_id', $toDetach)
+            ->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('mahasiswa.show', $mahasiswa->id)
+            ->with('success', 'Rumusan Dosen successfully attached or detached.');
     }
+
+
+
+
 
     // Show the form to attach Rumusan Dosen
     public function attachRumusanDosenForm($id)
     {
         $mahasiswa = Mahasiswa::findOrFail($id);
-        $rumusanDosens = RumusanDosen::all();
+        $rumusanDosens = RumusanDosen::all();  // Fetch all Rumusan Dosen
         return view('mahasiswa.attach_rumusan', compact('mahasiswa', 'rumusanDosens'));
     }
+
 
 }

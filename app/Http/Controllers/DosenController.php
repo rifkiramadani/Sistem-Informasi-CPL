@@ -166,22 +166,45 @@ class DosenController extends Controller
     public function insertRumusan(Request $request, $id)
     {
         $validated = $request->validate([
-            "rumusan_id" => 'required|array',
+            "rumusan_id" => 'array',
             "rumusan_id.*" => 'numeric'
         ]);
 
         $dosen = Dosen::findOrFail($id);  // Find Dosen by ID
 
-        // Iterate over selected rumusan_id and attach them to the dosen
-        foreach ($request->rumusan_id as $rumusanId) {
-            // Create a new RumusanDosen entry for each rumusan_id
+        // If no rumusan_id is provided, delete all associated records
+        if (empty($request->rumusan_id)) {
+            // Delete all RumusanDosen entries associated with this Dosen
+            $dosen->rumusanDosens()->delete();
+            return redirect('/dosen')->with('success', 'All Rumusan relationships removed.');
+        }
+
+        // Get the current rumusan_ids already attached to the dosen
+        $existingRumusanIds = $dosen->rumusanDosens->pluck('rumusan_id')->toArray();
+
+        // Get the new rumusan_ids from the request
+        $newRumusanIds = $request->rumusan_id;
+
+        // Find the IDs to attach (those that are in $newRumusanIds but not in $existingRumusanIds)
+        $toAttach = array_diff($newRumusanIds, $existingRumusanIds);
+
+        // Find the IDs to detach (those that are in $existingRumusanIds but not in $newRumusanIds)
+        $toDetach = array_diff($existingRumusanIds, $newRumusanIds);
+
+        // Attach new RumusanDosen entries
+        foreach ($toAttach as $rumusanId) {
             $dosen->rumusanDosens()->create([
                 'rumusan_id' => $rumusanId,  // Attach rumusan to dosen
             ]);
         }
 
-        return redirect('/dosen')->with('success', 'Rumusan Successfully Attached');
+        // Detach RumusanDosen entries
+        $dosen->rumusanDosens()->whereIn('rumusan_id', $toDetach)->delete();
+
+        return redirect('/dosen')->with('success', 'Rumusan Successfully Attached or Detached');
     }
+
+
 
 
 }

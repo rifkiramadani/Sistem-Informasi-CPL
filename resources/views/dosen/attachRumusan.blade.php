@@ -43,7 +43,7 @@
                                                 <!-- Move the checkbox to the first column -->
                                                 <td>
                                                     <input type="checkbox" name="rumusan_id[]" value="{{ $rumusan->id }}"
-                                                        @if ($dosen->rumusanDosens->contains($rumusan->id)) checked @endif
+                                                        @if ($dosen->rumusanDosens->contains('rumusan_id', $rumusan->id)) checked @endif
                                                         class="form-check-input">
                                                 </td>
                                                 <td>{{ $loop->iteration }}</td>

@@ -98,7 +98,7 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|D
     Route::get('/mahasiswa/{id}/attach-rumusan-dosen', [MahasiswaController::class, 'attachRumusanDosenForm'])->name('mahasiswa.attachRumusanDosenForm');
 
     // Route for attaching RumusanDosen to Mahasiswa
-    Route::post('/mahasiswa/{id}/attach-rumusan-dosen', [MahasiswaController::class, 'attachRumusanDosen'])->name('mahasiswa.attachRumusanDosen');
+    Route::put('/mahasiswa/{id}/attach-rumusan-dosen', [MahasiswaController::class, 'attachRumusanDosen'])->name('mahasiswa.attachRumusanDosen');
 
 });
 
