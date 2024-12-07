@@ -20,4 +20,8 @@ class Dosen extends Model
     public function matakuliah() {
         return $this->belongsToMany(Mata_kuliah::class);
     }
+
+    public function rumusanDosens() {
+        return $this->hasMany(RumusanDosen::class);
+    }
 }

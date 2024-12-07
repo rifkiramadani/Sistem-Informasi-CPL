@@ -46,4 +46,8 @@ class Rumusan extends Model
     {
         return $this->hasMany(RumusanCpl::class);
     }
+    public function rumusanDosens()
+    {
+        return $this->hasMany(RumusanDosen::class);
+    }
 }
