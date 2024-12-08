@@ -1,59 +1,103 @@
 @extends('layouts.master')
 
 @section('content')
-<main id="main" class="main">
+    <main id="main" class="main">
 
-    <div class="pagetitle">
-        <h1>Detail Mahasiswa</h1>
-    </div><!-- End Page Title -->
+        <div class="pagetitle">
+            <h1>Detail Mahasiswa</h1>
+        </div><!-- End Page Title -->
 
-    <section class="section">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card" style="width: 60rem">
-                    <div class="card-body">
-                        <h5 class="card-title">Detail Mahasiswa</h5>
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card" style="width: 60rem">
+                        <div class="card-body">
+                            <h5 class="card-title">Detail Mahasiswa</h5>
 
-                        <table class="table">
-                            <tr>
-                                <th>Name</th>
-                                <td>{{ $mahasiswa->user->name }}</td>
-                            </tr>
-                            <tr>
-                                <th>NPM</th>
-                                <td>{{ $mahasiswa->npm }}</td>
-                            </tr>
-                            <tr>
-                                <th>Username</th>
-                                <td>{{ $mahasiswa->user->username }}</td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>{{ $mahasiswa->user->email }}</td>
-                            </tr>
-                            <tr>
-                                <th>Semester</th>
-                                <td>{{ $mahasiswa->semester->name }}</td>
-                            </tr>
-                        </table>
+                            <table class="table">
+                                <tr>
+                                    <th>Name</th>
+                                    <td>{{ $mahasiswa->user->name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>NPM</th>
+                                    <td>{{ $mahasiswa->npm }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Username</th>
+                                    <td>{{ $mahasiswa->user->username }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{ $mahasiswa->user->email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Semester</th>
+                                    <td>{{ $mahasiswa->semester->name }}</td>
+                                </tr>
+                            </table>
 
-                        <!-- List Attached Rumusan Dosen -->
-                        <h6>Attached Rumusan Dosen:</h6>
-                        <ul>
-                            @foreach ($mahasiswa->rumusanMahasiswas as $rumusanMahasiswa)
-                                <li>{{ $rumusanMahasiswa->rumusanDosen->dosen->user->name ?? 'Tidak ada name' }} - {{ $rumusanMahasiswa->rumusanDosen->rumusan->mata_kuliah->name ?? 'Tidak ada mata kuliah' }}</li>
+                            <!-- Radar Chart Section -->
+                            <h6>Radar Charts (Skor Mahasiswa per Rumusan):</h6>
+
+                            @foreach ($mahasiswa->rumusanMahasiswas as $index => $rumusanMahasiswa)
+                                <div style="width: 80%; margin: 0 auto; padding-top: 50px;">
+                                    <h6>{{ $rumusanMahasiswa->rumusanDosen->dosen->user->name ?? 'Tidak ada name' }} -
+                                        {{ $rumusanMahasiswa->rumusanDosen->rumusan->mata_kuliah->name ?? 'Tidak ada mata kuliah' }}
+                                    </h6>
+                                    <canvas id="radarChart{{ $index }}"></canvas>
+                                </div>
+                                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                <script>
+                                    // Prepare data for the current RumusanMahasiswa
+                                    const labels{{ $index }} = @json($rumusanMahasiswa->labels); // Labels for the chart (Cpmk names)
+                                    const values{{ $index }} = @json($rumusanMahasiswa->values); // Skor (scores) values
+
+                                    // Get the context of the canvas element
+                                    const ctx{{ $index }} = document.getElementById('radarChart{{ $index }}').getContext('2d');
+
+                                    // Create the Radar Chart using Chart.js
+                                    const radarChart{{ $index }} = new Chart(ctx{{ $index }}, {
+                                        type: 'radar',
+                                        data: {
+                                            labels: labels{{ $index }},
+                                            datasets: [{
+                                                label: 'Skor Mahasiswa',
+                                                data: values{{ $index }},
+                                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                                borderColor: 'rgba(54, 162, 235, 1)',
+                                                borderWidth: 2
+                                            }]
+                                        },
+                                        options: {
+                                            scale: {
+                                                ticks: {
+                                                    beginAtZero: true,
+                                                    max: 100 // Adjust max value as needed
+                                                }
+                                            },
+                                            elements: {
+                                                line: {
+                                                    tension: 0.2
+                                                }
+                                            }
+                                        }
+                                    });
+                                </script>
                             @endforeach
-                        </ul>
 
-                        <!-- Button to Attach Rumusan Dosen -->
-                        <a href="{{ route('mahasiswa.attachRumusanDosen', $mahasiswa->id) }}" class="btn btn-success">Attach Rumusan Dosen</a>
+                            <!-- Button to Attach Rumusan Dosen -->
+                            @if (!Auth::user()->hasRole('Mahasiswa'))
+                                <a href="{{ route('mahasiswa.attachRumusanDosen', $mahasiswa->id) }}"
+                                    class="btn btn-success">Attach Rumusan Dosen</a>
+                            @endif
 
-                        <a href="{{ route('mahasiswa.index') }}" class="btn btn-secondary">Back to List</a>
+                            <a href="{{ route('mahasiswa.index') }}" class="btn btn-secondary">Back to List</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-</main>
+    </main>
 @endsection

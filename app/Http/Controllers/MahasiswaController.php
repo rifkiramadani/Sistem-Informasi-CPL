@@ -109,8 +109,28 @@ class MahasiswaController extends Controller
     public function show($id)
     {
         $mahasiswa = Mahasiswa::findOrFail($id);
+
+        // Initialize an array to hold the labels and values for each RumusanMahasiswa
+        foreach ($mahasiswa->rumusanMahasiswas as $rumusanMahasiswa) {
+            $labels = [];
+            $values = [];
+
+            // Loop through the RumusanMahasiswa and extract Cpmk data
+            foreach ($rumusanMahasiswa->rumusanDosen->rumusan->rumusanCpls as $rumusanCpl) {
+                foreach ($rumusanCpl->rumusanCplCpmks as $rumusanCplCpmk) {
+                    $labels[] = $rumusanCplCpmk->cpmk->name; // Assuming you have 'name' field in Cpmk model
+                    $values[] = $rumusanCplCpmk->skor_maks; // The score to be displayed
+                }
+            }
+
+            // Store the labels and values in the RumusanMahasiswa object
+            $rumusanMahasiswa->labels = $labels;
+            $rumusanMahasiswa->values = $values;
+        }
+
         return view('mahasiswa.show', compact('mahasiswa'));
     }
+
 
     // Delete a Mahasiswa and User
     public function destroy($id)
