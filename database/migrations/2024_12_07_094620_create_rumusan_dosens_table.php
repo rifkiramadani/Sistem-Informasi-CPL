@@ -10,12 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        // Schema::create('rumusan_dosens', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->foreignId('rumusan_id')->constrained('rumusans')->onDelete('cascade'); // Foreign key to rumusans table
-        //     $table->foreignId('dosen_id')->constrained('dosens')->onDelete('cascade'); // Foreign key to dosens table
-        //     $table->timestamps();
-        // });
+        Schema::create('rumusan_dosens', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('rumusan_id')->constrained('rumusans')->onDelete('cascade'); // Foreign key to rumusans table
+            $table->foreignId('dosen_id')->constrained('dosens')->onDelete('cascade'); // Foreign key to dosens table
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        // Schema::dropIfExists('rumusan_dosens');
+        Schema::dropIfExists('rumusan_dosens');
     }
 };
