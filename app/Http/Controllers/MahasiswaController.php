@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\RumusanDosen;
+use App\Models\RumusanMahasiswaNilai;
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
 use App\Models\RumusanMahasiswa;
@@ -176,10 +177,28 @@ class MahasiswaController extends Controller
 
         // Attach new RumusanDosen entries
         foreach ($toAttach as $rumusanDosenId) {
-            RumusanMahasiswa::create([
+            // Fetch the RumusanDosen using the ID
+            $rumusanDosen = RumusanDosen::findOrFail($rumusanDosenId);
+
+            // Create the RumusanMahasiswa record
+            $rumusanMahasiswa = RumusanMahasiswa::create([
                 'mahasiswa_id' => $mahasiswa->id,
-                'rumusan_dosen_id' => $rumusanDosenId,
+                'rumusan_dosen_id' => $rumusanDosen->id,
             ]);
+
+            // Fetch related rumusan_cpl_cpmk records for the attached rumusan_dosen
+            $rumusanCplCpmks = $rumusanDosen->rumusan->rumusanCpls->flatMap(function ($rumusanCpl) {
+                return $rumusanCpl->rumusanCplCpmks; // Get all rumusan_cpl_cpmk for each rumusan_cpl
+            });
+
+            // Create rumusan_mahasiswa_nilai entries with nilai = 0
+            foreach ($rumusanCplCpmks as $rumusanCplCpmk) {
+                RumusanMahasiswaNilai::create([
+                    'rumusan_mahasiswa_id' => $rumusanMahasiswa->id,
+                    'rumusan_cpl_cpmk_id' => $rumusanCplCpmk->id,
+                    'nilai' => 0, // Default value for nilai
+                ]);
+            }
         }
 
         // Detach RumusanDosen entries
@@ -191,6 +210,8 @@ class MahasiswaController extends Controller
         return redirect()->route('mahasiswa.show', $mahasiswa->id)
             ->with('success', 'Rumusan Dosen successfully attached or detached.');
     }
+
+
 
 
 

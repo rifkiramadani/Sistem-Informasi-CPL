@@ -9,7 +9,10 @@ class RumusanMahasiswaNilai extends Model
 {
     use HasFactory;
 
-    protected $guard= ['id'];
+    protected $fillable = [
+      'rumusan_mahasiswa_id',
+      'rumusan_cpl_cpmk_id',
+    ];
 
     public function rumusan_mahasiswa() {
         return $this->belongsTo(RumusanMahasiswa::class);
