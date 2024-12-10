@@ -111,26 +111,34 @@ class MahasiswaController extends Controller
     {
         $mahasiswa = Mahasiswa::findOrFail($id);
 
-        // Initialize an array to hold the labels and values for each RumusanMahasiswa
+        // Initialize an array to hold the labels, nilai, and skor_maks for each RumusanMahasiswa
         foreach ($mahasiswa->rumusanMahasiswas as $rumusanMahasiswa) {
             $labels = [];
-            $values = [];
+            $nilaiValues = [];
+            $skorMaxValues = [];
 
             // Loop through the RumusanMahasiswa and extract Cpmk data
             foreach ($rumusanMahasiswa->rumusanDosen->rumusan->rumusanCpls as $rumusanCpl) {
                 foreach ($rumusanCpl->rumusanCplCpmks as $rumusanCplCpmk) {
                     $labels[] = $rumusanCplCpmk->cpmk->name; // Assuming you have 'name' field in Cpmk model
-                    $values[] = $rumusanCplCpmk->skor_maks; // The score to be displayed
+
+                    // Get the nilai from RumusanMahasiswaNilai (which should be pre-populated or edited)
+                    $rumusanMahasiswaNilai = $rumusanMahasiswa->rumusanMahasiswaNilais->where('rumusan_cpl_cpmk_id', $rumusanCplCpmk->id)->first();
+                    $nilaiValues[] = $rumusanMahasiswaNilai ? $rumusanMahasiswaNilai->nilai : 0; // Default to 0 if no nilai is found
+
+                    $skorMaxValues[] = $rumusanCplCpmk->skor_maks; // The maximum score (skor_maks) to be displayed
                 }
             }
 
-            // Store the labels and values in the RumusanMahasiswa object
+            // Store the labels, nilaiValues, and skorMaxValues in the RumusanMahasiswa object
             $rumusanMahasiswa->labels = $labels;
-            $rumusanMahasiswa->values = $values;
+            $rumusanMahasiswa->nilaiValues = $nilaiValues;
+            $rumusanMahasiswa->skorMaxValues = $skorMaxValues;
         }
 
         return view('mahasiswa.show', compact('mahasiswa'));
     }
+
 
 
     // Delete a Mahasiswa and User

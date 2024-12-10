@@ -35,6 +35,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Rumusan Dosen</th>
+                                                <th>Mata Kuliah</th>
                                                 <th>Rumusan CPL</th>
                                                 <th>Nilai</th>
                                                 <th>Skor Maks</th>
@@ -45,6 +46,7 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $rumusanMahasiswaNilai->rumusanMahasiswa->rumusanDosen->dosen->user->name ?? 'N/A' }}</td>
+                                                    <td>{{ $rumusanMahasiswaNilai->rumusanCplCpmk->rumusanCpl->rumusan->mata_kuliah->name ?? 'N/A' }}</td>
                                                     <td>{{ $rumusanMahasiswaNilai->rumusanCplCpmk->rumusanCpl->cpl->name ?? 'N/A' }}</td>
                                                     <td>
                                                         <input type="number" name="nilai[{{ $rumusanMahasiswaNilai->id }}]"

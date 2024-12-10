@@ -51,7 +51,8 @@
                                 <script>
                                     // Prepare data for the current RumusanMahasiswa
                                     const labels{{ $index }} = @json($rumusanMahasiswa->labels); // Labels for the chart (Cpmk names)
-                                    const values{{ $index }} = @json($rumusanMahasiswa->values); // Skor (scores) values
+                                    const nilaiValues{{ $index }} = @json($rumusanMahasiswa->nilaiValues); // Skor mahasiswa
+                                    const skorMaxValues{{ $index }} = @json($rumusanMahasiswa->skorMaxValues); // Skor maks
 
                                     // Get the context of the canvas element
                                     const ctx{{ $index }} = document.getElementById('radarChart{{ $index }}').getContext('2d');
@@ -63,9 +64,15 @@
                                             labels: labels{{ $index }},
                                             datasets: [{
                                                 label: 'Skor Mahasiswa',
-                                                data: values{{ $index }},
+                                                data: nilaiValues{{ $index }},
                                                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                                                 borderColor: 'rgba(54, 162, 235, 1)',
+                                                borderWidth: 2
+                                            }, {
+                                                label: 'Skor Maks',
+                                                data: skorMaxValues{{ $index }},
+                                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                                borderColor: 'rgba(255, 99, 132, 1)',
                                                 borderWidth: 2
                                             }]
                                         },
