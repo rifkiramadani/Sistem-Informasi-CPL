@@ -22,4 +22,8 @@ class RumusanMahasiswa extends Model
     {
         return $this->belongsTo(RumusanDosen::class);
     }
+
+    public function rumusan_mahasiswa_nilais(){
+        return $this->hasMany(RumusanMahasiswaNilai::class);
+    }
 }

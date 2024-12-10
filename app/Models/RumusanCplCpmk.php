@@ -25,4 +25,9 @@ class RumusanCplCpmk extends Model
     public function cpmk() {
         return $this->belongsTo(Cpmk::class);
     }
+
+    public function rumusan_mahasiswa_nilais()
+    {
+        return $this->hasMany(RumusanMahasiswaNilai::class);
+    }
 }
