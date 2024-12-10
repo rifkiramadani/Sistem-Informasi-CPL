@@ -23,7 +23,7 @@ class RumusanMahasiswa extends Model
         return $this->belongsTo(RumusanDosen::class);
     }
 
-    public function rumusan_mahasiswa_nilais(){
+    public function rumusanMahasiswaNilais(){
         return $this->hasMany(RumusanMahasiswaNilai::class);
     }
 }

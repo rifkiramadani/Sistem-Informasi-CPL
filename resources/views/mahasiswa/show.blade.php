@@ -88,12 +88,16 @@
 
                             <!-- Button to Attach Rumusan Dosen -->
                             @if (!Auth::user()->hasRole('Mahasiswa|Dosen'))
-                                <a href="{{ route('mahasiswa.attachRumusanDosen', $mahasiswa->id) }}"
-                                    class="btn btn-success">Attach Rumusan Dosen</a>
+                                <a href="{{ route('mahasiswa.attachRumusanDosen', $mahasiswa->id) }}" class="btn btn-success">Attach Rumusan Dosen</a>
                             @endif
-                            
-                            @if(!Auth::user()->hasRole('Mahasiswa'))
-                            <a href="{{ route('mahasiswa.index') }}" class="btn btn-secondary">Back to List</a>
+
+                            <!-- New button to edit Nilai -->
+                            @if (!Auth::user()->hasRole('Mahasiswa'))
+                                <a href="{{ route('mahasiswa.nilai.edit', $mahasiswa->id) }}" class="btn btn-primary">Edit Nilai</a>
+                            @endif
+
+                            @if (!Auth::user()->hasRole('Mahasiswa'))
+                                <a href="{{ route('mahasiswa.index') }}" class="btn btn-secondary">Back to List</a>
                             @endif
                         </div>
                     </div>

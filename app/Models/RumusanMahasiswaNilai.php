@@ -12,13 +12,14 @@ class RumusanMahasiswaNilai extends Model
     protected $fillable = [
       'rumusan_mahasiswa_id',
       'rumusan_cpl_cpmk_id',
+      'nilai'
     ];
 
-    public function rumusan_mahasiswa() {
+    public function rumusanMahasiswa() {
         return $this->belongsTo(RumusanMahasiswa::class);
     }
 
-    public function rumusan_cpl_cpmk() {
+    public function rumusanCplCpmk() {
         return $this->belongsTo(RumusanCplCpmk::class);
     }
 }

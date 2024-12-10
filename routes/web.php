@@ -142,3 +142,11 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function (
     Route::put('/cpmk/{id}', [CpmkController::class, 'update']);
     Route::delete('/cpmk/{id}', [CpmkController::class, 'destroy']);
 });
+
+use App\Http\Controllers\RumusanMahasiswaNilaiController;
+
+Route::middleware(['auth'])->group(function () {
+    // View and Edit Nilai for Mahasiswa
+    Route::get('mahasiswa/{mahasiswa}/nilai', [RumusanMahasiswaNilaiController::class, 'edit'])->name('mahasiswa.nilai.edit');
+    Route::put('mahasiswa/{mahasiswa}/nilai', [RumusanMahasiswaNilaiController::class, 'update'])->name('mahasiswa.nilai.update');
+});
