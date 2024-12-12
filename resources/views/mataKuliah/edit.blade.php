@@ -27,17 +27,6 @@
                 <label for="name">Nama Mata Kuliah</label>
                 <input class="form-control" type="text" name="name" id="name" value="{{ $matakuliah->name }}" required>
               </div>
-              <div class="mb-3">
-                <label for="semester_id">Semester</label>
-                <select class="form-control" name="semester_id" id="semester_id" required>
-                    @foreach ($semesters as $semester)
-                        <option value="{{ $semester->id }}" 
-                            {{ $matakuliah->semester_id == $semester->id ? 'selected' : '' }}>
-                            {{ $semester->name }}
-                        </option>
-                    @endforeach
-                </select>
-              </div>
               <button class="btn btn-primary" type="submit">+ Ubah Data</button>
             </form>
           </div>

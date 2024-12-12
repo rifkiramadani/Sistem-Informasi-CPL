@@ -25,7 +25,6 @@
                     <th scope="col">No</th>
                     <th scope="col">Kode Matkul</th>
                     <th scope="col">Nama Mata Kuliah</th>
-                    <th scope="col">Semester</th>
                     <th scope="col">Aksi</th>
                   </tr>
                 </thead>
@@ -35,7 +34,6 @@
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $matakuliah->kode_matkul }}</td>
                     <td>{{ $matakuliah->name }}</td>
-                    <td>{{ $matakuliah->semesters->name }}</td>
                     <td>
                       <a class="btn btn-warning" href="/matakuliah/{{ $matakuliah->id }}/edit">Edit</a>
                       <form action="/matakuliah/{{ $matakuliah->id }}" method="post" class="d-inline">

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('kode_matkul');
             $table->string('name');
-            $table->integer('semester_id');
             // $table->integer('cpl_id');
             $table->timestamps();
         });

@@ -29,13 +29,11 @@ class MatakuliahController extends Controller
         $validated = $request->validate([
             'kode_matkul' => 'required',
             'name' => 'required',
-            'semester_id' => 'required|numeric',
         ]);
 
         $mataKuliah = Mata_kuliah::create([
             'kode_matkul' => $request->kode_matkul,
             'name' => $request->name,
-            'semester_id' => $request->semester_id
         ]);
 
         return redirect('/matakuliah')->with('success', 'Tambah Mata Kuliah Berhasil');
@@ -45,7 +43,6 @@ class MatakuliahController extends Controller
     public function edit($id) {
         return view('matakuliah.edit', [
             'matakuliah' => Mata_kuliah::find($id),
-            'semesters' => Semester::all(),
             'cpls' => Cpl::all()
         ]);
     }
@@ -54,7 +51,6 @@ class MatakuliahController extends Controller
         $validated = $request->validate([
             'kode_matkul' => 'required',
             'name' => 'required',
-            'semester_id' => 'required|numeric',
         ]);
 
         $matakuliah = Mata_kuliah::findOrFail($id);
@@ -62,7 +58,6 @@ class MatakuliahController extends Controller
         $matakuliah->update([
             'kode_matkul' => $request->kode_matkul,
             'name' => $request->name,
-            'semester_id' => $request->semester_id
         ]);
 
         return redirect('/matakuliah')->with('success', 'Ubah Data Mata Kuliah Berhasil');

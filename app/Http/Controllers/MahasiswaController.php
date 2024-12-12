@@ -35,7 +35,6 @@ class MahasiswaController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'npm' => 'required|unique:mahasiswas,npm',
-            'semester_id' => 'required|exists:semesters,id',
         ]);
 
         // Create User
@@ -54,7 +53,6 @@ class MahasiswaController extends Controller
         Mahasiswa::create([
             'user_id' => $user->id,
             'npm' => $request->npm,
-            'semester_id' => $request->semester_id,
         ]);
 
         return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa has been created successfully!');
@@ -74,7 +72,6 @@ class MahasiswaController extends Controller
         $request->validate([
             'npm' => 'required|unique:mahasiswas,npm,' . $id,
             'name' => 'required|string|max:255',
-            'semester_id' => 'required|exists:semesters,id',
             'password' => 'nullable|min:8', // Password is optional but must be at least 8 characters if provided
         ]);
 
@@ -100,7 +97,6 @@ class MahasiswaController extends Controller
         // Update the Mahasiswa details
         $mahasiswa->update([
             'npm' => $request->npm,
-            'semester_id' => $request->semester_id,
         ]);
 
         return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa successfully updated.');

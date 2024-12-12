@@ -31,10 +31,6 @@
                                     <th>Email</th>
                                     <td>{{ $mahasiswa->user->email }}</td>
                                 </tr>
-                                <tr>
-                                    <th>Semester</th>
-                                    <td>{{ $mahasiswa->semester->name }}</td>
-                                </tr>
                             </table>
 
                             <!-- Radar Chart Section -->

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('npm')->unique();
-            $table->integer('semester_id');
             $table->integer('nilai_id')->nullable();
             $table->timestamps();
         });

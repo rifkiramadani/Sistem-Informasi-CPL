@@ -27,7 +27,6 @@
                                         <th scope="col">No</th>
                                         <th scope="col">Kode Matkul</th>
                                         <th scope="col">Mata Kuliah</th>
-                                        <th scope="col">Semester</th>
                                         <th scope="col">CPL</th>
                                         <th scope="col">Deskripsi (CPL)</th>
                                         <th scope="col">CPMK</th>
@@ -42,7 +41,6 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $rumusan->mata_kuliah->kode_matkul }}</td>
                                             <td>{{ $rumusan->mata_kuliah->name }}</td>
-                                            <td>{{ $rumusan->mata_kuliah->semesters->name }}</td>
                                             <td>
                                                 @foreach ($rumusan->rumusanCpls as $cpl)
                                                     <ul>

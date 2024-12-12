@@ -10,7 +10,7 @@ class CpmkController extends Controller
 {
     public function index() {
         return view('cpmk.index', [
-            'cpmks' => Cpmk::paginate(10)
+            'cpmks' => Cpmk::paginate(5)
         ]);
     }
 
@@ -22,13 +22,11 @@ class CpmkController extends Controller
         $validate = $request->validate([
             'name' => 'required',
             'deskripsi' => 'required',
-            'skor_maks' => 'required|numeric'
         ]);
 
         Cpmk::create([
             'name'=>$request->name,
             'deskripsi'=>$request->deskripsi,
-            'skor_maks'=>$request->skor_maks
         ]);
 
         return redirect('/cpmk')->with('success', 'Tambah Data CPMK Berhasil');
@@ -44,7 +42,6 @@ class CpmkController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'deskripsi' => 'required',
-            'skor_maks' => 'required|numeric'
         ]);
 
         $cpmk = Cpmk::findOrFail($id);
@@ -52,7 +49,6 @@ class CpmkController extends Controller
         $cpmk->update([
             'name' => $request->name,
             'deskripsi' => $request->deskripsi,
-            'skor_maks' => $request->skor_maks
         ]);
 
         return redirect('/cpmk')->with('success', 'Ubah data CPMK Berhasil');
