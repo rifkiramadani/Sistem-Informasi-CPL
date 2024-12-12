@@ -79,7 +79,7 @@
                                                             @foreach ($cpl->rumusanCplCpmks as $cpmk)
                                                                 <ul>
                                                                     <li>
-                                                                        {{ $cpmk->cpmk->deskripsigit  }}
+                                                                        {{ $cpmk->cpmk->deskripsi  }}
                                                                     </li>
                                                                 </ul>
                                                             @endforeach

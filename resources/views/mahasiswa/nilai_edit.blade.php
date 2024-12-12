@@ -37,6 +37,7 @@
                                                 <th>Rumusan Dosen</th>
                                                 <th>Mata Kuliah</th>
                                                 <th>Rumusan CPL</th>
+                                                <th>Rumusan CPMK</th>
                                                 <th>Nilai</th>
                                                 <th>Skor Maks</th>
                                             </tr>
@@ -48,6 +49,7 @@
                                                     <td>{{ $rumusanMahasiswaNilai->rumusanMahasiswa->rumusanDosen->dosen->user->name ?? 'N/A' }}</td>
                                                     <td>{{ $rumusanMahasiswaNilai->rumusanCplCpmk->rumusanCpl->rumusan->mata_kuliah->name ?? 'N/A' }}</td>
                                                     <td>{{ $rumusanMahasiswaNilai->rumusanCplCpmk->rumusanCpl->cpl->name ?? 'N/A' }}</td>
+                                                    <td>{{ $rumusanMahasiswaNilai->rumusanCplCpmk->cpmk->name ?? 'N/A' }}</td>
                                                     <td>
                                                         <input type="number" name="nilai[{{ $rumusanMahasiswaNilai->id }}]"
                                                                value="{{ old('nilai.' . $rumusanMahasiswaNilai->id, $rumusanMahasiswaNilai->nilai) }}"
