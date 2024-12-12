@@ -49,6 +49,9 @@
                   @endforeach
                 </tbody>
               </table>
+              <div>
+                {{ $cpmks->links('pagination::bootstrap-5') }}
+              </div>
               <!-- End Table with hoverable rows -->
             </div>
           </div>

@@ -12,7 +12,7 @@ class OperatorController extends Controller
 {
     public function index() {
         return view('operator.index', [
-            'operators' => Operator::all()
+            'operators' => Operator::with('user')->paginate(10)
         ]);
     }
 

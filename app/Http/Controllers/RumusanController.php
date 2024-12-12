@@ -16,7 +16,7 @@ class RumusanController extends Controller
     public function index()
     {
         return view('rumusan.index', [
-            'rumusans' => Rumusan::all()
+            'rumusans' => Rumusan::paginate(5)
         ]);
     }
 

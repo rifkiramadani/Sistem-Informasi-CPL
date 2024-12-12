@@ -57,6 +57,9 @@
                   @endforeach
                 </tbody>
               </table>
+              <div>
+                {{ $cpls->links('pagination::bootstrap-5') }}
+            </div>
               <!-- End Table with hoverable rows -->
             </div>
           </div>

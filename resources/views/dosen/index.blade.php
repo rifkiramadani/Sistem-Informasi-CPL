@@ -61,6 +61,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div>
+                            {{ $dosens->links('pagination::bootstrap-5') }}
+                        </div>
                         <!-- End Table with hoverable rows -->
                     </div>
                 </div>

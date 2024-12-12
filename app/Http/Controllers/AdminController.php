@@ -12,7 +12,7 @@ class AdminController extends Controller
 {
     public function index() {
         return view('admin.index', [
-            'admins' => Admin::all()
+            'admins' => Admin::with('user')->paginate(10)
         ]);
     }
 

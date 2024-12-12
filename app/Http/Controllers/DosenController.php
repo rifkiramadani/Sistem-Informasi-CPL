@@ -15,7 +15,7 @@ class DosenController extends Controller
     public function index()
     {
         return view('dosen.index', [
-            "dosens" => Dosen::all(),
+            "dosens" => Dosen::with('user')->paginate(5),
             "matakuliahs" => Mata_kuliah::all(),
         ]);
     }

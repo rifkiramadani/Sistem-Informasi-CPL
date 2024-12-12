@@ -47,10 +47,13 @@
                             <button type="submit" class="btn btn-danger"  onclick="return confirm('Yakin Ingin Menghapus Data???')">Delete</button>
                         </form>
                       </td>
-                    </tr>
-                  @endforeach
-                </tbody>
-               </table>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </tr>
+                <div>
+                  {{ $admins->links('pagination::bootstrap-5') }}
+              </div>
                 <!-- End Table with hoverable rows -->
                     </div>
                 </div>

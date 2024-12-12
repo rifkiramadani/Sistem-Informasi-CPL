@@ -11,7 +11,7 @@ class CplController extends Controller
 {
     public function index() {
         return view('cpl.index',[
-            'cpls' => Cpl::all(),
+            'cpls' => Cpl::paginate(10),
         ]);
     }
 

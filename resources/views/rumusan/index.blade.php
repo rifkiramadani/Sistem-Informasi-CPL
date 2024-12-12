@@ -117,6 +117,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div>
+                                {{ $rumusans->links('pagination::bootstrap-5') }}
+                            </div>
                             <!-- End Table with hoverable rows -->
                         </div>
                     </div>

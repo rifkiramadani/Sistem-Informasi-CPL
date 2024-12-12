@@ -12,7 +12,7 @@ class MatakuliahController extends Controller
 {
     public function index() {
         return view('mataKuliah.index', [
-            'matakuliahs' => Mata_kuliah::all(),
+            'matakuliahs' => Mata_kuliah::paginate(10),
         ]);
     }
 

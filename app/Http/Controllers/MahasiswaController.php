@@ -18,7 +18,7 @@ class MahasiswaController extends Controller
     public function index()
     {
         return view('mahasiswa.index', [
-            'mahasiswas' => Mahasiswa::all(),
+            'mahasiswas' => Mahasiswa::with('user')->paginate(10),
         ]);
     }
 

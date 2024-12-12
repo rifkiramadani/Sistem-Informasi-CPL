@@ -51,6 +51,9 @@
                   @endforeach
                 </tbody>
                </table>
+               <div>
+                {{ $operators->links('pagination::bootstrap-5') }}
+              </div>
                 <!-- End Table with hoverable rows -->
                     </div>
                 </div>

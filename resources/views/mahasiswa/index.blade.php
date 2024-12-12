@@ -50,7 +50,9 @@
                                 @endforeach
                             </tbody>
                         </table>
-
+                        <div>
+                            {{ $mahasiswas->links('pagination::bootstrap-5') }}
+                        </div>
                     </div>
                 </div>
             </div>

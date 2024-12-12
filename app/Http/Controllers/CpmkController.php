@@ -10,7 +10,7 @@ class CpmkController extends Controller
 {
     public function index() {
         return view('cpmk.index', [
-            'cpmks' => Cpmk::all()
+            'cpmks' => Cpmk::paginate(10)
         ]);
     }
 

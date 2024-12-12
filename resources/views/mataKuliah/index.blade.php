@@ -48,6 +48,9 @@
                   @endforeach
                 </tbody>
               </table>
+              <div>
+                {{ $matakuliahs->links('pagination::bootstrap-5') }}
+            </div>
               <!-- End Table with hoverable rows -->
             </div>
           </div>
