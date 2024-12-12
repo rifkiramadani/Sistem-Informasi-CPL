@@ -26,7 +26,6 @@
                     <th scope="col">No</th>
                     <th scope="col">Kode CPMK</th>
                     <th scope="col">Deskripsi</th>
-                    <th scope="col">Skor Maks</th>
                     <th scope="col">Aksi</th>
                   </tr>
                 </thead>
@@ -36,7 +35,6 @@
                       <th scope="row">{{ $loop->iteration }}</th>
                       <td>{{ $cpmk->name }}</td>
                       <td>{{ $cpmk->deskripsi }}</td>
-                      <td>{{ $cpmk->skor_maks }}</td>
                       <td>
                         <a href="/cpmk/{{ $cpmk->id }}/edit" class="btn btn-warning">Edit</a>
                         <form action="/cpmk/{{ $cpmk->id }}" method="post" class="d-inline">

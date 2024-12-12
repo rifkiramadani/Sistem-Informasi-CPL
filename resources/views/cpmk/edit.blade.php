@@ -27,10 +27,6 @@
                 <label for="deskripsi">Deskripsi</label>
                 <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="5" required>{{ $cpmk->deskripsi }}</textarea>
               </div>
-              <div class="mb-3">
-                <label for="skor_maks">Skor Maks</label>
-                <input class="form-control" type="text" name="skor_maks" id="skor_maks" value="{{ $cpmk->skor_maks }}" required>
-              </div>
               <button class="btn btn-primary" type="submit">+ Simpan</button>
             </form>
   
