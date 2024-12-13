@@ -28,15 +28,6 @@
                                 <input type="text" class="form-control" id="npm" name="npm" required>
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label for="semester_id">Semester</label>
-                                <select class="form-control" id="semester_id" name="semester_id" required>
-                                    @foreach($semesters as $semester)
-                                        <option value="{{ $semester->id }}">{{ $semester->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
                             <button type="submit" class="btn btn-primary">Create Mahasiswa</button>
                         </form>
                     </div>

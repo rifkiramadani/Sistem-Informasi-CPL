@@ -102,8 +102,6 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|D
     // Route for attaching RumusanDosen to Mahasiswa
     Route::put('/mahasiswa/{id}/attach-rumusan-dosen', [MahasiswaController::class, 'attachRumusanDosen'])->name('mahasiswa.attachRumusanDosen');
 
-    Route::get('/mahasiswa/search',[MahasiswaController::class, 'search'])->name('mahasiswa.search');
-
 });
 
 

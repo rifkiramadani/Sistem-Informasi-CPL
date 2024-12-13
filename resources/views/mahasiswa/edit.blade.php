@@ -29,18 +29,6 @@
                                 <input type="text" class="form-control" id="npm" name="npm" value="{{ old('npm', $mahasiswa->npm) }}" required>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="semester_id" class="form-label">Semester</label>
-                                <select class="form-select" id="semester_id" name="semester_id" required>
-                                    <option value="" disabled>Select Semester</option>
-                                    @foreach ($semesters as $semester)
-                                        <option value="{{ $semester->id }}" {{ $semester->id == $mahasiswa->semester_id ? 'selected' : '' }}>
-                                            {{ $semester->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
                             <!-- Password Field -->
                             <div class="mb-3">
                                 <label for="password" class="form-label">New Password (Leave blank if not changing)</label>

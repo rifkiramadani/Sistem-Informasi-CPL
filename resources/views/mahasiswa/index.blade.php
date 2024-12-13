@@ -20,10 +20,10 @@
 
                         <h5 class="card-title">Data Mahasiswa <a class="btn btn-primary float-end" href="{{ route('mahasiswa.create') }}">+ Add Mahasiswa</a></h5>
                         <div class="search-bar float-start">
-                            <form class="search-form d-flex" method="GET" action="{{ route('mahasiswa.search') }}">
-                              <input class="form-control" type="search" name="search" placeholder="Masukkan Nama Mahasiswa" title="Masukkan Nama Mahasiswa">
-                              <button class="btn btn-secondary" type="submit" title="Search"><i class="bi bi-search"></i></button>
-                            </form>
+                            <form class="search-form d-flex" method="GET" action="/mahasiswa">
+                                <input class="form-control" type="search" name="search" placeholder="Masukkan Nama Mahasiswa" title="Masukkan Nama Mahasiswa">
+                                <button class="btn btn-secondary" type="submit" title="Search"><i class="bi bi-search"></i></button>
+                              </form>
                           </div>
                         <table class="table table-hover">
                             <thead>

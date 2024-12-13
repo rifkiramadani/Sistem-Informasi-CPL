@@ -15,18 +15,27 @@ use Spatie\Permission\Models\Role;
 class MahasiswaController extends Controller
 {
     // Show the list of Mahasiswa
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->has('search')) {
+            $mahasiswa = Mahasiswa::whereHas('user', function ($query) use ($request) {
+                $query->where('name', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('npm', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('email', 'LIKE', '%' . $request->search. '%');
+            })->paginate(10)->withQueryString();
+        } else {
+            $mahasiswa = Mahasiswa::paginate(10);
+        }
+    
         return view('mahasiswa.index', [
-            'mahasiswas' => Mahasiswa::with('user')->paginate(10),
+            'mahasiswas' => $mahasiswa,
         ]);
     }
 
     // Show the form to create a new Mahasiswa
     public function create()
     {
-        $semesters = Semester::all();
-        return view('mahasiswa.create', compact('semesters'));
+        return view('mahasiswa.create');
     }
 
     // Store a new Mahasiswa and User
@@ -62,8 +71,7 @@ class MahasiswaController extends Controller
     public function edit($id)
     {
         $mahasiswa = Mahasiswa::findOrFail($id);
-        $semesters = Semester::all();
-        return view('mahasiswa.edit', compact('mahasiswa', 'semesters'));
+        return view('mahasiswa.edit', compact('mahasiswa'));
     }
 
     // Update an existing Mahasiswa and User
@@ -84,7 +92,7 @@ class MahasiswaController extends Controller
         $user->update([
             'name' => $request->name,
             'username' => $username,
-            'email' => $username . '@anjas.com',  // Sync email with username
+            'email' => $username . '@gmail.com',  // Sync email with username
         ]);
 
         // If password is provided, update it
@@ -237,6 +245,8 @@ class MahasiswaController extends Controller
             return 'C';
         } elseif ($percentage >= 40) {
             return 'D';
+        } elseif ($percentage == null) {
+            return '';
         } else {
             return 'E';
         }
@@ -335,7 +345,7 @@ class MahasiswaController extends Controller
         if($request->has('search')) {
             $mahasiswa = Mahasiswa::where('name','LIKE','%'.$request->search.'%')->paginate(5)->withQueryString();
         } else {
-            $mahasiswa = Mahasiswa::paginate(5);
+            $mahasiswa = Mahasiswa::paginate(5); 
         }
 
         return view('mahasiswa.index',[
