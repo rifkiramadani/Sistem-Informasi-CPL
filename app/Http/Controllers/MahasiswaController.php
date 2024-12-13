@@ -215,18 +215,24 @@ class MahasiswaController extends Controller
             ->with('success', 'Rumusan Dosen successfully attached or detached.');
     }
 
-
-
-
-
-
-
     // Show the form to attach Rumusan Dosen
     public function attachRumusanDosenForm($id)
     {
         $mahasiswa = Mahasiswa::findOrFail($id);
         $rumusanDosens = RumusanDosen::all();  // Fetch all Rumusan Dosen
         return view('mahasiswa.attach_rumusan', compact('mahasiswa', 'rumusanDosens'));
+    }
+
+    public function search(Request $request) {
+        if($request->has('search')) {
+            $mahasiswa = Mahasiswa::where('name','LIKE','%'.$request->search.'%')->paginate(5)->withQueryString();
+        } else {
+            $mahasiswa = Mahasiswa::paginate(5); 
+        }
+
+        return view('mahasiswa.index',[
+            'mahasiswas' => $mahasiswa
+        ]);
     }
 
 

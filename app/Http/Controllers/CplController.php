@@ -67,4 +67,16 @@ class CplController extends Controller
 
         return redirect('/cpl')->with('success', 'Data CPL Berhasil Di Hapus');
     }
+
+    public function search(Request $request) {
+        if($request->has('search')) {
+            $cpl = Cpl::where('name','LIKE','%'.$request->search.'%')->paginate(5)->withQueryString();
+        } else {
+            $cpl = Cpl::paginate(5); 
+        }
+
+        return view('cpl.index',[
+            'cpls' => $cpl
+        ]);
+    }
 }

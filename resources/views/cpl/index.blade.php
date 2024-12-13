@@ -18,7 +18,12 @@
                 </div>
               @endif
               <h5 class="card-title">Data CPL <a class="btn btn-primary float-end" href="/cpl/create">+ Tambah CPL</a></h5>
-
+              <div class="search-bar float-start">
+                <form class="search-form d-flex" method="GET" action="/cpl/search">
+                  <input class="form-control" type="search" name="search" placeholder="Masukkan Kode CPL" title="Masukkan Kode CPL">
+                  <button class="btn btn-secondary" type="submit" title="Search"><i class="bi bi-search"></i></button>
+                </form>
+              </div>
               <!-- Table with hoverable rows -->
               <table class="table table-hover">
                 <thead>

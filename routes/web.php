@@ -100,6 +100,8 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|D
     // Route for attaching RumusanDosen to Mahasiswa
     Route::put('/mahasiswa/{id}/attach-rumusan-dosen', [MahasiswaController::class, 'attachRumusanDosen'])->name('mahasiswa.attachRumusanDosen');
 
+    Route::get('/mahasiswa/search',[MahasiswaController::class, 'search'])->name('mahasiswa.search');
+
 });
 
 
@@ -121,6 +123,7 @@ Route::middleware('auth', 'role:SuperAdmin/AkunSakti|Admin')->group(function () 
     Route::get('/matakuliah/{id}/edit', [MatakuliahController::class, 'edit']);
     Route::put('/matakuliah/{id}', [MatakuliahController::class, 'update']);
     Route::delete('/matakuliah/{id}', [MatakuliahController::class, 'destroy']);
+    Route::get('/matakuliah/search',[MatakuliahController::class, 'search']);
 });
 
 // ROUTE CPL
@@ -131,6 +134,7 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function (
     Route::get('/cpl/{id}/edit', [CplController::class, 'edit']);
     Route::put('/cpl/{id}', [CplController::class, 'update']);
     Route::delete('/cpl/{id}', [CplController::class, 'destroy']);
+    Route::get('/cpl/search',[CplController::class, 'search']);
 });
 
 // ROUTE CPMK
@@ -141,6 +145,7 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin'])->group(function (
     Route::get('/cpmk/{id}/edit', [CpmkController::class, 'edit']);
     Route::put('/cpmk/{id}', [CpmkController::class, 'update']);
     Route::delete('/cpmk/{id}', [CpmkController::class, 'destroy']);
+    Route::get('/cpmk/search',[CpmkController::class, 'search']);
 });
 
 use App\Http\Controllers\RumusanMahasiswaNilaiController;

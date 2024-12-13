@@ -18,7 +18,12 @@
                   </div>
               @endif
                 <h5 class="card-title">Data CPMK <a class="btn btn-primary float-end" href="/cpmk/create">+ Tambah CPMK</a></h5>
-
+                <div class="search-bar float-start">
+                  <form class="search-form d-flex" method="GET" action="/cpmk/search">
+                    <input class="form-control" type="search" name="search" placeholder="Masukkan Kode CPMK" title="Masukkan Kode CPMK">
+                    <button class="btn btn-secondary" type="submit" title="Search"><i class="bi bi-search"></i></button>
+                  </form>
+                </div>
               <!-- Table with hoverable rows -->
               <table class="table table-hover">
                 <thead>

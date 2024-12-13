@@ -18,6 +18,12 @@
                 </div>
               @endif
               <h5 class="card-title">Data Mata Kuliah <a class="btn btn-primary float-end" href="/matakuliah/create">+ Tambah Mata Kuliah</a></h5>
+              <div class="search-bar float-start">
+                <form class="search-form d-flex" method="GET" action="/matakuliah/search">
+                  <input class="form-control" type="search" name="search" placeholder="Masukkan Nama Mata Kuliah" title="Masukkan Nama Mata Kuliah">
+                  <button class="btn btn-secondary" type="submit" title="Search"><i class="bi bi-search"></i></button>
+                </form>
+              </div>
               <!-- Table with hoverable rows -->
               <table class="table table-hover">
                 <thead>

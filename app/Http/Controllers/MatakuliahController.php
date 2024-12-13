@@ -70,4 +70,16 @@ class MatakuliahController extends Controller
 
         return redirect('/matakuliah')->with('success', 'Hapus Data Mata Kuliah Berhasil');
     }
+
+    public function search(Request $request) {
+        if($request->has('search')) {
+            $matakuliah = Mata_kuliah::where('name','LIKE','%'.$request->search.'%')->paginate(5)->withQueryString();
+        } else {
+            $matakuliah = Mata_kuliah::paginate(5); 
+        }
+
+        return view('mataKuliah.index',[
+            'matakuliahs' => $matakuliah
+        ]);
+    }
 }

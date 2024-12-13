@@ -29,7 +29,7 @@
                         <input type="checkbox" name="mata_kuliah_id[]" id="mata_kuliah_id" value="{{ $matakuliah->id }}" 
                         @if ($dosen->matakuliah->contains($matakuliah->id)) checked @endif class="form-check-input">
                         <label class="form-check-label" for="mata_kuliah_id">
-                            {{ $matakuliah->kode_matkul }} | {{ $matakuliah->name }} | Semester {{ $matakuliah->semesters->name }}
+                            {{ $matakuliah->kode_matkul }} | {{ $matakuliah->name }}
                         </label>
                         <br>
                      @endforeach

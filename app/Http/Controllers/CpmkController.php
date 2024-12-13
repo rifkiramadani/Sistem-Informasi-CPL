@@ -59,5 +59,17 @@ class CpmkController extends Controller
         $cpmk->delete();
         return redirect('/cpmk')->with('success', 'Data CPMK Berhasil Di Hapus');
     }
+
+    public function search(Request $request) {
+        if($request->has('search')) {
+            $cpmk = Cpmk::where('name','LIKE','%'.$request->search.'%')->paginate(5)->withQueryString();
+        } else {
+            $cpmk = Cpmk::paginate(5); 
+        }
+
+        return view('cpmk.index',[
+            'cpmks' => $cpmk
+        ]);
+    }
 }
 
