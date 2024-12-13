@@ -14,6 +14,8 @@
                         <div class="card-body">
                             <h5 class="card-title">Detail Mahasiswa</h5>
 
+                            <a href="{{ route('mahasiswa.print', $mahasiswa->id) }}" class="btn btn-primary">Print</a>
+
                             <table class="table">
                                 <tr>
                                     <th>Name</th>

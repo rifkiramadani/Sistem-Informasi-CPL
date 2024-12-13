@@ -164,6 +164,67 @@ class MahasiswaController extends Controller
 
         return view('mahasiswa.show', compact('mahasiswa'));
     }
+    public function print($id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        // Initialize an array to hold the labels, nilai, skor_maks, total values, and percentages for each RumusanMahasiswa
+        foreach ($mahasiswa->rumusanMahasiswas as $rumusanMahasiswa) {
+            $labels = [];
+            $nilaiValues = [];
+            $skorMaxValues = [];
+            $percentages = [];
+            $letterGrades = [];
+
+            // Initialize sums
+            $totalNilai = 0;
+            $totalSkorMax = 0;
+
+            // Loop through the RumusanMahasiswa and extract Cpmk data
+            foreach ($rumusanMahasiswa->rumusanDosen->rumusan->rumusanCpls as $rumusanCpl) {
+                foreach ($rumusanCpl->rumusanCplCpmks as $rumusanCplCpmk) {
+                    $labels[] = $rumusanCplCpmk->cpmk->name; // Assuming you have 'name' field in Cpmk model
+
+                    // Get the nilai from RumusanMahasiswaNilai (which should be pre-populated or edited)
+                    $rumusanMahasiswaNilai = $rumusanMahasiswa->rumusanMahasiswaNilais->where('rumusan_cpl_cpmk_id', $rumusanCplCpmk->id)->first();
+                    $nilai = $rumusanMahasiswaNilai ? $rumusanMahasiswaNilai->nilai : 0; // Default to 0 if no nilai is found
+                    $nilaiValues[] = $nilai;
+
+                    // Get the maximum score (skor_maks)
+                    $skorMax = $rumusanCplCpmk->skor_maks;
+                    $skorMaxValues[] = $skorMax;
+
+                    // Add to total values
+                    $totalNilai += $nilai;
+                    $totalSkorMax += $skorMax;
+
+                    // Calculate the percentage for this Cpmk and store it
+                    $percentage = $skorMax > 0 ? ($nilai / $skorMax) * 100 : 0;
+                    $percentages[] = number_format($percentage, 2); // Format to 2 decimal places
+
+                    // Convert percentage to letter grade and store it
+                    $letterGrades[] = $this->getGrade($percentage);
+                }
+            }
+
+            // Store the labels, nilaiValues, skorMaxValues, percentages, and letterGrades in the RumusanMahasiswa object
+            $rumusanMahasiswa->labels = $labels;
+            $rumusanMahasiswa->nilaiValues = $nilaiValues;
+            $rumusanMahasiswa->skorMaxValues = $skorMaxValues;
+            $rumusanMahasiswa->percentages = $percentages;
+            $rumusanMahasiswa->letterGrades = $letterGrades;
+            $rumusanMahasiswa->totalNilai = $totalNilai; // Store total nilai
+            $rumusanMahasiswa->totalSkorMax = $totalSkorMax; // Store total skor maks
+
+            // Calculate overall percentage for the RumusanMahasiswa
+            $rumusanMahasiswa->overallPercentage = $totalSkorMax > 0 ? ($totalNilai / $totalSkorMax) * 100 : 0;
+
+            // Calculate overall letter grade
+            $rumusanMahasiswa->overallGrade = $this->getGrade($rumusanMahasiswa->overallPercentage);
+        }
+
+        return view('mahasiswa.print', compact('mahasiswa'));
+    }
 
     // Helper function to convert percentage to letter grade
     private function getGrade($percentage)

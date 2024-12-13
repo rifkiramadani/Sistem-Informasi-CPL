@@ -87,6 +87,8 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator|Mahasiswa|D
 
     // Update route (update an existing Mahasiswa)
     Route::put('/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
+    
+    Route::get('/mahasiswa/{id}/print', [MahasiswaController::class, 'print'])->name('mahasiswa.print');
 
     // Show route (show details of a specific Mahasiswa)
     Route::get('/mahasiswa/{id}', [MahasiswaController::class, 'show'])->name('mahasiswa.show');
