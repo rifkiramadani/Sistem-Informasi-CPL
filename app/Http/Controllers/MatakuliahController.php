@@ -73,7 +73,9 @@ class MatakuliahController extends Controller
 
     public function search(Request $request) {
         if($request->has('search')) {
-            $matakuliah = Mata_kuliah::where('name','LIKE','%'.$request->search.'%')->paginate(5)->withQueryString();
+            $matakuliah = Mata_kuliah::where('name','LIKE','%'.$request->search.'%')
+            ->orWhere('kode_matkul','LIKE','%'.$request->search.'%')
+            ->paginate(5)->withQueryString();
         } else {
             $matakuliah = Mata_kuliah::paginate(5); 
         }
