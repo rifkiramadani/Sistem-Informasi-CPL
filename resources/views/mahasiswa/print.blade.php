@@ -133,62 +133,29 @@
                             </tr>
                         </table>
 
-                        <h6>Radar Charts (Skor Mahasiswa per Rumusan):</h6>
-
-                        @foreach ($mahasiswa->rumusanMahasiswas as $index => $rumusanMahasiswa)
-                            <div style="width: 80%; margin: 0 auto; padding-top: 50px;">
-                                <h6>{{ $rumusanMahasiswa->rumusanDosen->dosen->user->name ?? 'Tidak ada name' }} -
-                                    {{ $rumusanMahasiswa->rumusanDosen->rumusan->mata_kuliah->name ?? 'Tidak ada mata kuliah' }}
-                                </h6>
-                                <h6>{{ $rumusanMahasiswa->overallGrade }}</h6>
-                                <canvas id="radarChart{{ $index }}"></canvas>
-                            </div>
-
-                            <script>
-                                // Prepare data for the current RumusanMahasiswa
-                                const labels{{ $index }} = @json($rumusanMahasiswa->labels);
-                                const nilaiValues{{ $index }} = @json($rumusanMahasiswa->nilaiValues);
-                                const skorMaxValues{{ $index }} = @json($rumusanMahasiswa->skorMaxValues);
-
-                                // Get the context of the canvas element
-                                const ctx{{ $index }} = document.getElementById('radarChart{{ $index }}').getContext('2d');
-
-                                // Create the Radar Chart using Chart.js
-                                const radarChart{{ $index }} = new Chart(ctx{{ $index }}, {
-                                    type: 'radar',
-                                    data: {
-                                        labels: labels{{ $index }},
-                                        datasets: [{
-                                            label: 'Skor Mahasiswa',
-                                            data: nilaiValues{{ $index }},
-                                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                            borderColor: 'rgba(54, 162, 235, 1)',
-                                            borderWidth: 2
-                                        }, {
-                                            label: 'Skor Maks',
-                                            data: skorMaxValues{{ $index }},
-                                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                            borderColor: 'rgba(255, 99, 132, 1)',
-                                            borderWidth: 2
-                                        }]
-                                    },
-                                    options: {
-                                        scale: {
-                                            ticks: {
-                                                beginAtZero: true,
-                                                max: 100
-                                            }
-                                        },
-                                        elements: {
-                                            line: {
-                                                tension: 0.2
-                                            }
-                                        }
-                                    }
-                                });
-                            </script>
-                        @endforeach
-
+                        <h6>Mata Kuliah yang Di Berikan</h6>
+                        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Mata Kuliah</th>
+                                        <th>Dosen Pengampu</th>
+                                        <th>Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($mahasiswa->rumusanMahasiswas as $index => $rumusanMahasiswa)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $rumusanMahasiswa->rumusanDosen->rumusan->mata_kuliah->name ?? 'Tidak ada mata kuliah' }}</td>
+                                        <td>{{ $rumusanMahasiswa->rumusanDosen->dosen->user->name ?? 'Tidak ada nama' }}</td>
+                                        <td>{{ $rumusanMahasiswa->overallGrade }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
