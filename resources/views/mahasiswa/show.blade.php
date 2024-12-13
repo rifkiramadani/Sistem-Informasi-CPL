@@ -41,6 +41,7 @@
                                     <h6>{{ $rumusanMahasiswa->rumusanDosen->dosen->user->name ?? 'Tidak ada name' }} -
                                         {{ $rumusanMahasiswa->rumusanDosen->rumusan->mata_kuliah->name ?? 'Tidak ada mata kuliah' }}
                                     </h6>
+                                    <h6>{{ $rumusanMahasiswa->overallGrade }}</h6>
                                     <canvas id="radarChart{{ $index }}"></canvas>
                                 </div>
                                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

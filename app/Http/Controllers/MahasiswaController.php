@@ -107,11 +107,17 @@ class MahasiswaController extends Controller
     {
         $mahasiswa = Mahasiswa::findOrFail($id);
 
-        // Initialize an array to hold the labels, nilai, and skor_maks for each RumusanMahasiswa
+        // Initialize an array to hold the labels, nilai, skor_maks, total values, and percentages for each RumusanMahasiswa
         foreach ($mahasiswa->rumusanMahasiswas as $rumusanMahasiswa) {
             $labels = [];
             $nilaiValues = [];
             $skorMaxValues = [];
+            $percentages = [];
+            $letterGrades = [];
+
+            // Initialize sums
+            $totalNilai = 0;
+            $totalSkorMax = 0;
 
             // Loop through the RumusanMahasiswa and extract Cpmk data
             foreach ($rumusanMahasiswa->rumusanDosen->rumusan->rumusanCpls as $rumusanCpl) {
@@ -120,20 +126,61 @@ class MahasiswaController extends Controller
 
                     // Get the nilai from RumusanMahasiswaNilai (which should be pre-populated or edited)
                     $rumusanMahasiswaNilai = $rumusanMahasiswa->rumusanMahasiswaNilais->where('rumusan_cpl_cpmk_id', $rumusanCplCpmk->id)->first();
-                    $nilaiValues[] = $rumusanMahasiswaNilai ? $rumusanMahasiswaNilai->nilai : 0; // Default to 0 if no nilai is found
+                    $nilai = $rumusanMahasiswaNilai ? $rumusanMahasiswaNilai->nilai : 0; // Default to 0 if no nilai is found
+                    $nilaiValues[] = $nilai;
 
-                    $skorMaxValues[] = $rumusanCplCpmk->skor_maks; // The maximum score (skor_maks) to be displayed
+                    // Get the maximum score (skor_maks)
+                    $skorMax = $rumusanCplCpmk->skor_maks;
+                    $skorMaxValues[] = $skorMax;
+
+                    // Add to total values
+                    $totalNilai += $nilai;
+                    $totalSkorMax += $skorMax;
+
+                    // Calculate the percentage for this Cpmk and store it
+                    $percentage = $skorMax > 0 ? ($nilai / $skorMax) * 100 : 0;
+                    $percentages[] = number_format($percentage, 2); // Format to 2 decimal places
+
+                    // Convert percentage to letter grade and store it
+                    $letterGrades[] = $this->getGrade($percentage);
                 }
             }
 
-            // Store the labels, nilaiValues, and skorMaxValues in the RumusanMahasiswa object
+            // Store the labels, nilaiValues, skorMaxValues, percentages, and letterGrades in the RumusanMahasiswa object
             $rumusanMahasiswa->labels = $labels;
             $rumusanMahasiswa->nilaiValues = $nilaiValues;
             $rumusanMahasiswa->skorMaxValues = $skorMaxValues;
+            $rumusanMahasiswa->percentages = $percentages;
+            $rumusanMahasiswa->letterGrades = $letterGrades;
+            $rumusanMahasiswa->totalNilai = $totalNilai; // Store total nilai
+            $rumusanMahasiswa->totalSkorMax = $totalSkorMax; // Store total skor maks
+
+            // Calculate overall percentage for the RumusanMahasiswa
+            $rumusanMahasiswa->overallPercentage = $totalSkorMax > 0 ? ($totalNilai / $totalSkorMax) * 100 : 0;
+
+            // Calculate overall letter grade
+            $rumusanMahasiswa->overallGrade = $this->getGrade($rumusanMahasiswa->overallPercentage);
         }
 
         return view('mahasiswa.show', compact('mahasiswa'));
     }
+
+    // Helper function to convert percentage to letter grade
+    private function getGrade($percentage)
+    {
+        if ($percentage >= 85) {
+            return 'A';
+        } elseif ($percentage >= 70) {
+            return 'B';
+        } elseif ($percentage >= 55) {
+            return 'C';
+        } elseif ($percentage >= 40) {
+            return 'D';
+        } else {
+            return 'E';
+        }
+    }
+
 
 
 
@@ -227,7 +274,7 @@ class MahasiswaController extends Controller
         if($request->has('search')) {
             $mahasiswa = Mahasiswa::where('name','LIKE','%'.$request->search.'%')->paginate(5)->withQueryString();
         } else {
-            $mahasiswa = Mahasiswa::paginate(5); 
+            $mahasiswa = Mahasiswa::paginate(5);
         }
 
         return view('mahasiswa.index',[

@@ -14,7 +14,7 @@ class MataKuliahSeeder extends Seeder
             'id' => 1,
             'kode_matkul' => 'SI-4321',
             'name' => 'Bahasa Pemrograman',
-            'semester_id' => 1,
+            // 'semester_id' => 1,
             'created_at' => Carbon::create('2024', '10', '19', '07', '46', '50'),
             'updated_at' => Carbon::create('2024', '11', '17', '06', '43', '26'),
         ]);
@@ -23,7 +23,7 @@ class MataKuliahSeeder extends Seeder
             'id' => 2,
             'kode_matkul' => 'SI-5678',
             'name' => 'Pengantar Basis Data',
-            'semester_id' => 3,
+            // 'semester_id' => 3,
             'created_at' => Carbon::create('2024', '10', '19', '07', '55', '58'),
             'updated_at' => Carbon::create('2024', '11', '17', '06', '43', '35'),
         ]);
@@ -32,7 +32,7 @@ class MataKuliahSeeder extends Seeder
             'id' => 4,
             'kode_matkul' => 'SI-1111',
             'name' => 'Sistem Operasi',
-            'semester_id' => 4,
+            // 'semester_id' => 4,
             'created_at' => Carbon::create('2024', '11', '11', '18', '35', '23'),
             'updated_at' => Carbon::create('2024', '11', '11', '18', '35', '23'),
         ]);
@@ -41,7 +41,7 @@ class MataKuliahSeeder extends Seeder
             'id' => 5,
             'kode_matkul' => 'SI-0898',
             'name' => 'Manajemen Organisasi',
-            'semester_id' => 1,
+            // 'semester_id' => 1,
             'created_at' => Carbon::create('2024', '11', '17', '06', '41', '42'),
             'updated_at' => Carbon::create('2024', '11', '17', '06', '41', '42'),
         ]);

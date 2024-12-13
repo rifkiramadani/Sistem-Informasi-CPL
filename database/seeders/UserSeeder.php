@@ -106,7 +106,7 @@ class UserSeeder extends Seeder
         // Create related Mahasiswa record
         $mahasiswaProfile = Mahasiswa::create([
             'user_id' => $mahasiswa->id,
-            'semester_id' => 1, // Assign a default semester, adjust as needed
+            // 'semester_id' => 1, // Assign a default semester, adjust as needed
             'npm' => '123456789'
             // Add other necessary attributes for Mahasiswa model
         ]);
