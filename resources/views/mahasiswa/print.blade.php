@@ -112,9 +112,12 @@
             <div class="col-lg-12">
                 <div class="card" style="width: 100%; margin: 0 auto;">
                     <div class="card-body">
-                        <h5 class="card-title">Detail Mahasiswa</h5>
+                        <h5 class="card-title">Capaian Mahasiswa</h5>
 
                         <table class="table">
+                            <tr>
+                                <center><img class="img-thumbnail mb-2" src="{{ asset('storage/' . $mahasiswa->user->profile_picture) }}" alt="foto_{{ $mahasiswa->user->name }}" width="180"></center>
+                            </tr>
                             <tr>
                                 <th>Name</th>
                                 <td>{{ $mahasiswa->user->name }}</td>

@@ -18,6 +18,9 @@
 
                             <table class="table">
                                 <tr>
+                                    <center><img class="img-thumbnail mb-2" src="{{ asset('storage/' . $mahasiswa->user->profile_picture) }}" alt="foto_{{ $mahasiswa->user->name }}" width="200"></center>
+                                </tr>
+                                <tr>
                                     <th>Name</th>
                                     <td>{{ $mahasiswa->user->name }}</td>
                                 </tr>
