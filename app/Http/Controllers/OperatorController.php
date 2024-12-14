@@ -72,6 +72,7 @@ class OperatorController extends Controller
             'username' => 'required',
             'email' => 'required|email:dns',
             'password' => 'required',
+            'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             // 'user_id' => 'required',
             'user_id' => 'numeric',
             'nip' => 'required'
@@ -80,13 +81,13 @@ class OperatorController extends Controller
         $operator = Operator::findOrFail($id);
         $user = User::findOrFail($operator->user_id);
 
-        $path = $user->profile_picture; // Simpan path lama jika tidak diupdate
+        $path = $user->profile_picture;
         if ($request->hasFile('profile_picture')) {
-            // Hapus foto lama jika ada
             if ($path) {
                 Storage::disk('public')->delete($path);
             }
             $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $path; // Simpan path baru ke database
         }
 
         $user->update([

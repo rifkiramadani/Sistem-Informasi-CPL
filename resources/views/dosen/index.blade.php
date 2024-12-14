@@ -40,7 +40,7 @@
                                 @foreach ($dosens as $dosen)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
-                                        <td><img class="img-thumbnail" src="{{ asset('storage/' . $dosen->user->profile_picture) }}" alt="foto_{{ $dosen->user->name }}" width="75"></td>
+                                        <td><img class="img-thumbnail" src="{{ asset('storage/' . $dosen->user->profile_picture) }}" alt="foto_{{ $dosen->user->name }}" width="100"></td>
                                         <td class="fw-bold" style="font-size: 13px">{{ $dosen->user->name ?? 'Tidak ada name' }}</td>
                                         <td>{{ $dosen->user->username ?? 'Tidak ada username' }}</td>
                                         <td>{{ $dosen->user->email ?? 'Tidak ada email' }}</td>

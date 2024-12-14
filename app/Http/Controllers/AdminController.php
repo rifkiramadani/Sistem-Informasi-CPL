@@ -78,13 +78,13 @@ class AdminController extends Controller
             'nip' => 'required',
         ]);
 
-        $path = $user->profile_picture; // Simpan path lama jika tidak diupdate
+        $path = $user->profile_picture;
         if ($request->hasFile('profile_picture')) {
-            // Hapus foto lama jika ada
             if ($path) {
                 Storage::disk('public')->delete($path);
             }
             $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $path; // Simpan path baru ke database
         }
         
         $user->name = $request->name;
