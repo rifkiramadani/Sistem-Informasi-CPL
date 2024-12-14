@@ -17,8 +17,13 @@
                                     {{ session('success') }}
                                 </div>
                             @endif
-                            <h5 class="card-title">Data Rumusan <a class="btn btn-primary float-end"
-                                    href="/rumusan/create">+ Tambah Rumusan</a></h5>
+                            <h5 class="card-title">Data Rumusan <a class="btn btn-primary float-end" href="/rumusan/create">+ Tambah Rumusan</a></h5>
+                            <div class="search-bar float-start">
+                                <form class="search-form d-flex" method="GET" action="/rumusan">
+                                    <input class="form-control" type="search" name="search" placeholder="Masukkan Rumusan" title="Masukkan Rumusan">
+                                    <button class="btn btn-secondary" type="submit" title="Search"><i class="bi bi-search"></i></button>
+                                  </form>
+                              </div>
 
                             <!-- Table with hoverable rows -->
                             <table class="table table-hover">

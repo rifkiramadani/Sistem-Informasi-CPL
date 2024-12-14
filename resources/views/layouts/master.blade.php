@@ -129,14 +129,6 @@
               </a>
             </li>
           @endif
-          @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Operator')|| auth()->user()->hasRole('Dosen'))
-            <li class="nav-item">
-              <a class="nav-link {{ request()->is('mahasiswa') ? '' : 'collapsed' }}" href="/mahasiswa">
-                <i class="bi bi-person"></i>
-                <span>Mahasiswa</span>
-              </a>
-            </li>
-          @endif
           @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Operator'))
             <li class="nav-item">
               <a class="nav-link {{ request()->is('dosen') ? '' : 'collapsed' }}" href="/dosen">
@@ -145,6 +137,14 @@
               </a>
             </li>
             @endif
+          @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Operator')|| auth()->user()->hasRole('Dosen'))
+            <li class="nav-item">
+              <a class="nav-link {{ request()->is('mahasiswa') ? '' : 'collapsed' }}" href="/mahasiswa">
+                <i class="bi bi-person"></i>
+                <span>Mahasiswa</span>
+              </a>
+            </li>
+          @endif
             @if (auth()->user()->hasRole('SuperAdmin/AkunSakti') || auth()->user()->hasRole('Admin'))
             <hr>
             <h5>Pemetaan</h5>

@@ -13,10 +13,30 @@ use App\Http\Controllers\Controller;
 
 class RumusanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->has('search')) {
+            $search = $request->search;
+
+            $rumusan = Rumusan::whereHas('mata_kuliah', function ($query) use ($search) {
+                    $query->where('kode_matkul', 'LIKE', '%' . $search . '%')
+                        ->orWhere('name', 'LIKE', '%' . $search . '%');
+                })
+                ->orWhereHas('rumusanCpls.cpl', function ($query) use ($search) {
+                    $query->where('name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+                })
+                ->orWhereHas('rumusanCpls.rumusanCplCpmks.cpmk', function ($query) use ($search) {
+                    $query->where('name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+                })
+                ->paginate(3)->withQueryString();
+        } else {
+            $rumusan = Rumusan::paginate(3);
+        }
+
         return view('rumusan.index', [
-            'rumusans' => Rumusan::paginate(5)
+            'rumusans' => $rumusan
         ]);
     }
 
@@ -164,4 +184,5 @@ class RumusanController extends Controller
 
         return redirect('/rumusan')->with('success', 'Data Rumusan Berhasil Dihapus');
     }
+
 }
