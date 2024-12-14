@@ -45,13 +45,15 @@
                                         <td>{{ $mahasiswa->npm }}</td>
                                         <td>{{ $mahasiswa->user->email }}</td>
                                         <td>
-                                            <a class="btn btn-info" href="{{ route('mahasiswa.show', $mahasiswa->id) }}">Detail</a>
-                                            <a class="btn btn-warning" href="{{ route('mahasiswa.edit', $mahasiswa->id) }}">Edit</a>
-                                            <form action="{{ route('mahasiswa.destroy', $mahasiswa->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>
+                                            <div class="btn-group">
+                                                <a class="btn btn-sm btn-info" href="{{ route('mahasiswa.show', $mahasiswa->id) }}">Detail</a>
+                                                <a class="btn btn-sm btn-warning" href="{{ route('mahasiswa.edit', $mahasiswa->id) }}">Edit</a>
+                                                <form action="{{ route('mahasiswa.destroy', $mahasiswa->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

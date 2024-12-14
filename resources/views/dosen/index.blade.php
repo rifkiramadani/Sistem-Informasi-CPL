@@ -49,13 +49,15 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            <a class="btn btn-warning" href="/dosen/{{ $dosen->id }}/edit">Edit</a>
-                                            <a class="btn btn-success" href="/dosen/{{ $dosen->id }}/attach-rumusan">Attach Rumusan</a>
-                                            <form action="/dosen/{{ $dosen->id }}" method="post" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"  onclick="return confirm('Yakin Ingin Menghapus Data???')">Delete</button>
-                                            </form>
+                                            <div class="btn-group">
+                                                <a class="btn btn-sm btn-success" href="/dosen/{{ $dosen->id }}/attach-rumusan">Beri Rumusan</a>
+                                                <a class="btn btn-sm btn-warning" href="/dosen/{{ $dosen->id }}/edit">Edit</a>
+                                                <form action="/dosen/{{ $dosen->id }}" method="post" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger"  onclick="return confirm('Yakin Ingin Menghapus Data???')">Delete</button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
