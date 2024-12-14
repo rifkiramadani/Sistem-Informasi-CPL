@@ -29,6 +29,16 @@
                                 <input type="text" class="form-control" id="npm" name="npm" value="{{ old('npm', $mahasiswa->npm) }}" required>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="angkatan" class="form-label">Angkatan</label>
+                                <input type="number" class="form-control" id="angkatan" name="angkatan" value="{{ old('angkatan', $mahasiswa->angkatan) }}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="tahun_lulus" class="form-label">Tahun Lulus</label>
+                                <input type="date" class="form-control" id="tahun_lulus" name="tahun_lulus" value="{{ old('tahun_lulus', $mahasiswa->tahun_lulus) }}" required>
+                            </div>
+
                             <!-- Password Field -->
                             <div class="mb-3">
                                 <label for="password" class="form-label">New Password (Leave blank if not changing)</label>

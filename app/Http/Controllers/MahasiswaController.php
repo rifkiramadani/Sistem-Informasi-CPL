@@ -46,6 +46,8 @@ class MahasiswaController extends Controller
             'nama' => 'required|string|max:255',
             'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'npm' => 'required|unique:mahasiswas,npm',
+            'angkatan' => 'required|string|max:255',
+            'tahun_lulus' => 'required'
         ]);
 
         $path = null;
@@ -71,6 +73,8 @@ class MahasiswaController extends Controller
         Mahasiswa::create([
             'user_id' => $user->id,
             'npm' => $request->npm,
+            'angkatan' => $request->angkatan,
+            'tahun_lulus' => $request->tahun_lulus,
         ]);
 
         return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa has been created successfully!');
@@ -91,6 +95,8 @@ class MahasiswaController extends Controller
             'name' => 'required|string|max:255',
             'password' => 'nullable|min:8', // Password is optional but must be at least 8 characters if provided
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'angkatan' => 'required|string|max:255',
+            'tahun_lulus' => 'required'
         ]);
 
         // Fetch the Mahasiswa and associated User
@@ -126,6 +132,8 @@ class MahasiswaController extends Controller
         // Update the Mahasiswa details
         $mahasiswa->update([
             'npm' => $request->npm,
+            'angkatan' => $request->angkatan,
+            'tahun_lulus' => $request->tahun_lulus,
         ]);
 
         return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa successfully updated.');

@@ -27,6 +27,14 @@
                                 <label for="npm">NPM</label>
                                 <input type="text" class="form-control" id="npm" name="npm" required>
                             </div>
+                            <div class="form-group mb-3">
+                                <label for="angkatan">Angkatan</label>
+                                <input type="number" class="form-control" id="angkatan" name="angkatan" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="tahun_lulus">Tahun Lulus</label>
+                                <input type="date" class="form-control" id="tahun_lulus" name="tahun_lulus" required>
+                            </div>
 
                             <div class="mb-3">
                                 <label for="profile_picture" class="form-label">Profile Picture</label>

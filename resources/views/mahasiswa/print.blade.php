@@ -127,6 +127,14 @@
                                 <td>{{ $mahasiswa->npm }}</td>
                             </tr>
                             <tr>
+                                <th>Angkatan</th>
+                                <td>{{ $mahasiswa->angkatan }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tahun Lulus</th>
+                                <td>{{ $mahasiswa->tahun_lulus }}</td>
+                            </tr>
+                            <tr>
                                 <th>Username</th>
                                 <td>{{ $mahasiswa->user->username }}</td>
                             </tr>
