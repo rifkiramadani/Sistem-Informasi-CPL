@@ -24,6 +24,7 @@
                 <thead>
                   <tr>
                     <th scope="col">No</th>
+                    <th scope="col">Foto</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Username</th>
                     <th scope="col">Email</th>
@@ -35,7 +36,8 @@
                   @foreach ($admins as $admin)    
                     <tr>
                       <th scope="row">{{ $loop->iteration }}</th>
-                      <td class="fw-bold">{{ $admin->user->name }}</td>
+                      <td><img class="img-thumbnail" src="{{ asset('storage/' . $admin->user->profile_picture) }}" alt="foto_{{ $admin->user->name }}" width="75"></td>
+                      <td class="fw-bold" style="font-size: 13px">{{ $admin->user->name }}</td>
                       <td>{{ $admin->user->username }}</td>
                       <td>{{ $admin->user->email }}</td>
                       <td>{{ $admin->nip }}</td>
