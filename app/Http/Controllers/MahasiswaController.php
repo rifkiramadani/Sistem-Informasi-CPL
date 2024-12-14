@@ -10,6 +10,7 @@ use App\Models\RumusanMahasiswa;
 use App\Models\Semester;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 
 class MahasiswaController extends Controller
@@ -43,15 +44,23 @@ class MahasiswaController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
+            'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'npm' => 'required|unique:mahasiswas,npm',
         ]);
+
+        $path = null;
+        if ($request->hasFile('profile_picture')) {
+            // Simpan foto ke dalam folder public/profile_pictures
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        }
 
         // Create User
         $username = strtolower(str_replace(' ', '_', $request->nama));
         $user = User::create([
             'username' => $username,
             'name' => $request->nama,
-            'email' => $username . '@anjas.com',
+            'email' => $username . '@gmail.com',
+            'profile_picture' => $path,
             'password' => bcrypt($username),
         ]);
 
@@ -81,11 +90,23 @@ class MahasiswaController extends Controller
             'npm' => 'required|unique:mahasiswas,npm,' . $id,
             'name' => 'required|string|max:255',
             'password' => 'nullable|min:8', // Password is optional but must be at least 8 characters if provided
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Fetch the Mahasiswa and associated User
         $mahasiswa = Mahasiswa::findOrFail($id);
         $user = $mahasiswa->user;
+
+        $path = $user->profile_picture; // Simpan path lama jika tidak diupdate
+        if ($request->hasFile('profile_picture')) {
+            // Hapus foto lama jika ada
+            if ($path) {
+                Storage::disk('public')->delete($path);
+            }
+            // Simpan foto baru
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->update(['profile_picture' => $path]); // Update profile_picture di model User
+        }
 
         // Update the User's details (username and email are automatically updated based on name)
         $username = strtolower(str_replace(' ', '_', $request->name));

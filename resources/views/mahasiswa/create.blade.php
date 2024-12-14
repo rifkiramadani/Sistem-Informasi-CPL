@@ -15,7 +15,7 @@
                         <h5 class="card-title">Tambah Mahasiswa</h5>
 
                         <!-- Form -->
-                        <form action="{{ route('mahasiswa.store') }}" method="POST">
+                        <form action="{{ route('mahasiswa.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group mb-3">
@@ -27,6 +27,14 @@
                                 <label for="npm">NPM</label>
                                 <input type="text" class="form-control" id="npm" name="npm" required>
                             </div>
+
+                            <div class="mb-3">
+                                <label for="profile_picture" class="form-label">Profile Picture</label>
+                                <input type="file" name="profile_picture" id="profile_picture" class="form-control">
+                                {{-- @error('profile_picture')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror --}}
+                              </div>
 
                             <button type="submit" class="btn btn-primary">Create Mahasiswa</button>
                         </form>

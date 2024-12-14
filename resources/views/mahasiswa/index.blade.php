@@ -29,6 +29,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Foto</th>
                                     <th>Name</th>
                                     <th>NPM</th>
                                     <th>Email</th>
@@ -39,13 +40,14 @@
                                 @foreach ($mahasiswas as $mahasiswa)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td><img class="img-thumbnail" src="{{ asset('storage/' . $mahasiswa->user->profile_picture) }}" alt="foto_{{ $mahasiswa->user->name }}" width="75"></td>
                                         <td>{{ $mahasiswa->user->name }}</td>
                                         <td>{{ $mahasiswa->npm }}</td>
                                         <td>{{ $mahasiswa->user->email }}</td>
                                         <td>
                                             <a class="btn btn-info" href="{{ route('mahasiswa.show', $mahasiswa->id) }}">Detail</a>
                                             <a class="btn btn-warning" href="{{ route('mahasiswa.edit', $mahasiswa->id) }}">Edit</a>
-                                            <form action="{{ route('mahasiswa.destroy', $mahasiswa->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('mahasiswa.destroy', $mahasiswa->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>

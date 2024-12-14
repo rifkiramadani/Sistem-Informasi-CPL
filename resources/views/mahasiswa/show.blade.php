@@ -40,14 +40,16 @@
                             <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
                                 @foreach ($mahasiswa->rumusanMahasiswas as $index => $rumusanMahasiswa)
                                     <div style="width: 45%; padding-top: 20px; text-align: center;">
-                                        <h6>
-                                            <ul style="list-style-type: none; padding: 0;">
-                                                <li>No.{{ $loop->iteration }}</li>
-                                                <li><b>Dosen Pengampu: </b>{{ $rumusanMahasiswa->rumusanDosen->dosen->user->name ?? 'Tidak ada nama' }}</li>
-                                                <li><b>Mata Kuliah: </b>{{ $rumusanMahasiswa->rumusanDosen->rumusan->mata_kuliah->name ?? 'Tidak ada mata kuliah' }}</li>
-                                                <li><b>Nilai: </b>{{ $rumusanMahasiswa->overallGrade }}</li>
-                                            </ul>
-                                        </h6>
+                                        <div>
+                                            <h6>
+                                                <ul style="list-style-type: none; padding: 0;">
+                                                    <li>No.{{ $loop->iteration }}</li>
+                                                    <li><b>Dosen Pengampu: </b>{{ $rumusanMahasiswa->rumusanDosen->dosen->user->name ?? 'Tidak ada nama' }}</li>
+                                                    <li><b>Mata Kuliah: </b>{{ $rumusanMahasiswa->rumusanDosen->rumusan->mata_kuliah->name ?? 'Tidak ada mata kuliah' }}</li>
+                                                    <li><b>Nilai: </b>{{ $rumusanMahasiswa->overallGrade }}</li>
+                                                </ul>
+                                            </h6>
+                                        </div>
                                         <div style="width: 100%; height: 350px;">
                                             <canvas id="radarChart{{ $index }}"></canvas>
                                         </div>

@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Edit Mahasiswa</h5>
 
-                        <form action="{{ route('mahasiswa.update', $mahasiswa->id) }}" method="post">
+                        <form action="{{ route('mahasiswa.update', $mahasiswa->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -34,6 +34,17 @@
                                 <label for="password" class="form-label">New Password (Leave blank if not changing)</label>
                                 <input type="password" class="form-control" id="password" name="password">
                             </div>
+
+                            <div class="mb-3">
+                                <label for="profile_picture" class="form-label">Profile Picture</label>
+                                <input type="file" name="profile_picture" id="profile_picture" class="form-control">
+                                @if ($mahasiswa->user->profile_picture)
+                                    <img src="{{ asset('storage/' . $mahasiswa->user->profile_picture) }}" alt="Profile Picture" class="img-thumbnail mt-2" width="150">
+                                @endif
+                                {{-- @error('profile_picture')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror --}}
+                              </div>
 
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary">Update Mahasiswa</button>
