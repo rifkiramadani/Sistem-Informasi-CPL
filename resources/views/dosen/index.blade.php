@@ -10,8 +10,8 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card" style="width: 60rem">
-                    <div class="card-body">
+                <div class="card">
+                    <div class="card-body" width="auto">
                         @if (session()->has('success'))
                             <div class="alert alert-success mt-3">
                                 {{ session('success') }}
@@ -27,6 +27,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
+                                    <th scope="col">Foto</th>
                                     <th scope="col">Nama</th>
                                     <th scope="col">Username</th>
                                     <th scope="col">Email</th>
@@ -39,7 +40,8 @@
                                 @foreach ($dosens as $dosen)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
-                                        <td class="fw-bold">{{ $dosen->user->name ?? 'Tidak ada name' }}</td>
+                                        <td><img class="img-thumbnail" src="{{ asset('storage/' . $dosen->user->profile_picture) }}" alt="foto_{{ $dosen->user->name }}" width="75"></td>
+                                        <td class="fw-bold" style="font-size: 13px">{{ $dosen->user->name ?? 'Tidak ada name' }}</td>
                                         <td>{{ $dosen->user->username ?? 'Tidak ada username' }}</td>
                                         <td>{{ $dosen->user->email ?? 'Tidak ada email' }}</td>
                                         <td>{{ $dosen->nip }}</td>
@@ -50,7 +52,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <a class="btn btn-sm btn-success" href="/dosen/{{ $dosen->id }}/attach-rumusan">Beri Rumusan</a>
+                                                <a class="btn btn-sm btn-success" href="/dosen/{{ $dosen->id }}/attach-rumusan">Rumusan</a>
                                                 <a class="btn btn-sm btn-warning" href="/dosen/{{ $dosen->id }}/edit">Edit</a>
                                                 <form action="/dosen/{{ $dosen->id }}" method="post" class="d-inline">
                                                     @csrf
