@@ -366,7 +366,9 @@ class MahasiswaController extends Controller
     public function attachRumusanDosenForm($id)
     {
         $mahasiswa = Mahasiswa::findOrFail($id);
-        $rumusanDosens = RumusanDosen::all();  // Fetch all Rumusan Dosen
+
+
+        $rumusanDosens = RumusanDosen::paginate(5);  // Fetch all Rumusan Dosen and paginate
         return view('mahasiswa.attach_rumusan', compact('mahasiswa', 'rumusanDosens'));
     }
 

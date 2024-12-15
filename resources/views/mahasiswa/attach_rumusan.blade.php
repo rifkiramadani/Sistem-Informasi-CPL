@@ -112,7 +112,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-
+                                <div>
+                                    {{ $rumusanDosens->links('pagination::bootstrap-5') }}
+                                </div>
                                 <button class="btn btn-primary mt-3" type="submit">Attach Rumusan</button>
                             </form>
                         </div>

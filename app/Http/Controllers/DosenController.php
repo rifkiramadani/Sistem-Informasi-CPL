@@ -184,11 +184,10 @@ class DosenController extends Controller
                 ->orWhereHas('rumusanCpls.rumusanCplCpmks.cpmk', function ($query) use ($search) {
                     $query->where('name', 'LIKE', '%' . $search . '%')
                         ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
-                })
-                ->paginate(3)->withQueryString();
+                });
         } else {
             // Tampilkan semua data jika tidak ada pencarian
-            $rumusans = Rumusan::paginate(3);
+            $rumusans = Rumusan::all();
         }
 
         // Return view dengan variabel yang benar

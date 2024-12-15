@@ -18,12 +18,6 @@
                             @endif
 
                             <h5 class="card-title">Attach Rumusan to {{ $dosen->user->name }}</h5>
-                            <div class="search-bar float-start">
-                                <form class="search-form d-flex" method="GET" action="{{ route('attachRumusan', ['id' => $dosen->id]) }}">
-                                    <input class="form-control" type="search" name="search" placeholder="Masukkan Rumusan" title="Masukkan Rumusan" value="{{ request('search') }}">
-                                    <button class="btn btn-secondary" type="submit" title="Search"><i class="bi bi-search"></i></button>
-                                </form>
-                              </div>
 
                             <form action="/dosen/{{ $dosen->id }}/attach-rumusan" method="post">
                                 @csrf
@@ -45,7 +39,6 @@
                                     <tbody>
                                         @foreach ($rumusans as $rumusan)
                                             <tr>
-                                                <!-- Move the checkbox to the first column -->
                                                 <td>
                                                     <input type="checkbox" name="rumusan_id[]" value="{{ $rumusan->id }}"
                                                         @if ($dosen->rumusanDosens->contains('rumusan_id', $rumusan->id)) checked @endif
@@ -111,9 +104,6 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div>
-                                    {{ $rumusans->links('pagination::bootstrap-5') }}
-                                </div>
                                 <button class="btn btn-primary mt-3" type="submit">Attach Rumusan</button>
                             </form>
                         </div>
