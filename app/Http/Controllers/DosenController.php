@@ -165,11 +165,33 @@ class DosenController extends Controller
         return redirect('/dosen')->with('success', 'Set Mata Kuliah Berhasil');
     }
 
-    public function attachRumusan($id)
+    public function attachRumusan(Request $request, $id)
     {
         $dosen = Dosen::findOrFail($id);
-        $rumusans = Rumusan::all();  // Fetch all Rumusans
 
+        // Query pencarian
+        if ($request->has('search')) {
+            $search = $request->search;
+
+            $rumusans = Rumusan::whereHas('mata_kuliah', function ($query) use ($search) {
+                    $query->where('kode_matkul', 'LIKE', '%' . $search . '%')
+                        ->orWhere('name', 'LIKE', '%' . $search . '%');
+                })
+                ->orWhereHas('rumusanCpls.cpl', function ($query) use ($search) {
+                    $query->where('name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+                })
+                ->orWhereHas('rumusanCpls.rumusanCplCpmks.cpmk', function ($query) use ($search) {
+                    $query->where('name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('deskripsi', 'LIKE', '%' . $search . '%');
+                })
+                ->paginate(3)->withQueryString();
+        } else {
+            // Tampilkan semua data jika tidak ada pencarian
+            $rumusans = Rumusan::paginate(3);
+        }
+
+        // Return view dengan variabel yang benar
         return view('dosen.attachRumusan', compact('dosen', 'rumusans'));
     }
 

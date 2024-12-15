@@ -66,7 +66,7 @@ Route::middleware(['auth', 'role:SuperAdmin/AkunSakti|Admin|Operator'])->group(f
     Route::put('/dosen/{id}/matakuliah', [DosenController::class, 'insertMatakuliah']);
 
     // Add these routes
-    Route::get('/dosen/{id}/attach-rumusan', [DosenController::class, 'attachRumusan']);
+    Route::get('/dosen/{id}/attach-rumusan', [DosenController::class, 'attachRumusan'])->name('attachRumusan');
     Route::put('/dosen/{id}/attach-rumusan', [DosenController::class, 'insertRumusan']);
 
 });
