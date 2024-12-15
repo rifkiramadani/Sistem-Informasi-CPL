@@ -19,7 +19,6 @@ class MatakuliahController extends Controller
     public function create() {
         return view('matakuliah.create', [
             'cpls' => Cpl::all(),
-            'semesters' => Semester::all()
         ]);
     }
 
@@ -43,7 +42,6 @@ class MatakuliahController extends Controller
     public function edit($id) {
         return view('matakuliah.edit', [
             'matakuliah' => Mata_kuliah::find($id),
-            'cpls' => Cpl::all()
         ]);
     }
 
