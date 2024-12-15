@@ -21,9 +21,15 @@
                         <h5 class="card-title">Table Dosen
                             <a class="btn btn-primary float-end" href="/dosen/create">+ Tambah Dosen</a>
                         </h5>
+                        <div class="search-bar float-start">
+                            <form class="search-form d-flex" method="GET" action="/dosen">
+                                <input class="form-control" type="search" name="search" placeholder="Masukkan Nama Dosen" title="Masukkan Nama Dosen">
+                                <button class="btn btn-secondary" type="submit" title="Search"><i class="bi bi-search"></i></button>
+                              </form>
+                          </div>
 
                         <!-- Table with hoverable rows -->
-                        <table class="table table-hover">
+                        <table class="table table-hover" width="auto">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
@@ -40,7 +46,7 @@
                                 @foreach ($dosens as $dosen)
                                     <tr>
                                         <th scope="row">{{ $loop->iteration }}</th>
-                                        <td><img class="img-thumbnail" src="{{ asset('storage/' . $dosen->user->profile_picture) }}" alt="foto_{{ $dosen->user->name }}" width="100"></td>
+                                        <td><img class="img-thumbnail" src="{{ asset('storage/' . $dosen->user->profile_picture) }}" alt="foto_{{ $dosen->user->name }}" width="150"></td>
                                         <td class="fw-bold" style="font-size: 13px">{{ $dosen->user->name ?? 'Tidak ada name' }}</td>
                                         <td>{{ $dosen->user->username ?? 'Tidak ada username' }}</td>
                                         <td>{{ $dosen->user->email ?? 'Tidak ada email' }}</td>

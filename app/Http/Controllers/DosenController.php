@@ -12,11 +12,20 @@ use Illuminate\Support\Facades\Storage;
 
 class DosenController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->has('search')) {
+            $dosen = Dosen::whereHas('user', function ($query) use ($request) {
+                $query->where('name', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('nip', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('email', 'LIKE', '%' . $request->search. '%');
+            })->paginate(10)->withQueryString();
+        } else {
+            $dosen = Dosen::paginate(5);
+        }
+
         return view('dosen.index', [
-            "dosens" => Dosen::with('user')->paginate(5),
-            "matakuliahs" => Mata_kuliah::all(),
+            "dosens" => $dosen,
         ]);
     }
 
