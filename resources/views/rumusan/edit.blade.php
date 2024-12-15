@@ -64,20 +64,22 @@
 
                                                 <div class="mb-3">
                                                     <!-- CPMK checkbox -->
-                                                    <input type="checkbox" name="cpmk_id[{{ $cpl->id }}][]"
-                                                           value="{{ $cpmk->id }}"
-                                                           id="cpmk{{ $cpl->id }}-{{ $cpmk->id }}"
-                                                           class="form-check-input"
-                                                           {{ $rumusanCplCpmk ? 'checked' : '' }}>
-                                                    <label for="cpmk{{ $cpl->id }}-{{ $cpmk->id }}" class="form-check-label">
-                                                        {{ $cpmk->name }}
-                                                    </label>
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <input type="checkbox" name="cpmk_id[{{ $cpl->id }}][]"
+                                                               value="{{ $cpmk->id }}"
+                                                               id="cpmk{{ $cpl->id }}-{{ $cpmk->id }}"
+                                                               class="form-check-input"
+                                                               {{ $rumusanCplCpmk ? 'checked' : '' }}>
+                                                        <label for="cpmk{{ $cpl->id }}-{{ $cpmk->id }}" class="form-check-label">
+                                                            {{ $cpmk->name }} | {{ $cpmk->deskripsi }}
+                                                        </label>
+                                                    </div>
 
                                                     <!-- Skor Maks -->
                                                     <div class="mt-2">
                                                         <input class="form-control" type="number"
                                                                name="skor_maks[{{ $cpl->id }}][{{ $cpmk->id }}]"
-                                       value="{{ $skorMaks }}"
+                                                               value="{{ $skorMaks }}"
                                                                placeholder="Masukkan Skor Maks"
                                                                >
                                                     </div>

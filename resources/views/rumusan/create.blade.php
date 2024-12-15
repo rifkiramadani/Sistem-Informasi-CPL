@@ -56,12 +56,14 @@
                                             <div class="accordion-body">
                                                 @foreach ($cpmks as $cpmk)
                                                     <div>
-                                                        <input type="checkbox" name="cpmk_id[{{ $cpl->id }}][]"
-                                                            value="{{ $cpmk->id }}"
-                                                            id="cpmk{{ $cpl->id }}-{{ $cpmk->id }}"
-                                                            class="form-check-input">
-                                                        <label for="cpmk{{ $cpl->id }}-{{ $cpmk->id }}"
-                                                            class="form-check-label">{{ $cpmk->name }}</label>
+                                                        <div class="d-flex align-items-center mb-2">
+                                                            <input type="checkbox" name="cpmk_id[{{ $cpl->id }}][]"
+                                                                   value="{{ $cpmk->id }}" id="cpmk{{ $cpl->id }}-{{ $cpmk->id }}"
+                                                                   class="form-check-input me-2">
+                                                            <label for="cpmk{{ $cpl->id }}-{{ $cpmk->id }}" class="form-check-label mb-0">
+                                                                {{ $cpmk->name }} | {{ $cpmk->deskripsi }}
+                                                            </label>
+                                                        </div>
 
                                                         <!-- Skor Maks -->
                                                         <div class="mt-2" style="display: none;"
