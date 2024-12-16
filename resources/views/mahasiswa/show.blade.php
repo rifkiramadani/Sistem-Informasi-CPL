@@ -113,7 +113,7 @@
                             </div>
 
                             <!-- Button to Attach Rumusan Dosen -->
-                            @if (!Auth::user()->hasRole('Mahasiswa|Dosen'))
+                            @if (!Auth::user()->hasRole('Mahasiswa'))
                                 <a href="{{ route('mahasiswa.attachRumusanDosen', $mahasiswa->id) }}" class="btn btn-success">Attach Rumusan Dosen</a>
                             @endif
 

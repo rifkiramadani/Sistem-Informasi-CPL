@@ -66,7 +66,7 @@
                                                         </div>
 
                                                         <!-- Skor Maks -->
-                                                        <div class="mt-2" style="display: none;"
+                                                        <div class="mt-2" style="display: block;"
                                                             data-dependant="#cpmk{{ $cpl->id }}-{{ $cpmk->id }}">
                                                             <input class="form-control" type="number"
                                                                 name="skor_maks[{{ $cpl->id }}][{{ $cpmk->id }}]"
